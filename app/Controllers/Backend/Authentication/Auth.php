@@ -12,6 +12,7 @@ class Auth extends BaseController{
 	}
 
 	public function login(){
+		$session = session();
 		if($this->request->getMethod() == 'post'){
 			$validate = [
 				'email' => 'required|valid_email',
@@ -36,6 +37,8 @@ class Auth extends BaseController{
 		 			'email' => $user['email'],
 		 			// 'permission' => base64_encode($user['permission']),
 		 		];
+
+		 		$_SESSION['permission'] = base64_encode($user['permission']);
 		 		setcookie(AUTH.'backend', json_encode($cookieAuth), time() + 1*24*3600, "/");
 		 		$_update = [
 		 			'last_login' => gmdate('Y-m-d H:i:s', time() + 7*3600),
@@ -48,7 +51,6 @@ class Auth extends BaseController{
 		 			'data' => $_update
 		 		]);
 		 		if($flag > 0){
-		 			$session = session();
 		 			$session->setFlashdata('message-success', 'Đăng nhập Thành Công');
 		 			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
 		 		}

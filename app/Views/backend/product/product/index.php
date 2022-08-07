@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="uk-flex box-advanced" style="display: none">
-                            <div class="uk-width-1-4 mb20 mr30">
+                            <!-- <div class="uk-width-1-4 mb20 mr30">
                                  <div class="form-row ">
                                     <label>Khoảng giá</label>
                                     <div class="uk-flex uk-flex-middle uk-flex-space-between">
@@ -106,8 +106,8 @@
                                         <?php echo form_input('priceTo', set_value('date_end',(isset($_GET['priceTo']))? $_GET['priceTo'] : ''), 'class="form-control input uk-width-1-2 int ml10"  placeholder="Đến" autocomplete="off"');?>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="uk-width-1-4 mb20">
+                            </div> -->
+                            <!-- <div class="uk-width-1-4 mb20">
                                  <div class="form-row ">
                                     <label>Thuộc tính</label>
                                     <div class="uk-flex uk-flex-middle uk-flex-space-between">
@@ -122,11 +122,11 @@
                                         <?php echo form_dropdown('attr', $attr, set_value('attr', (isset($_GET['attr'])) ? $_GET['attr'] : 'root'), 'class="form-control input-sm  select2 mr10"  ');?>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="uk-flex uk-flex-middle">
+                        <!-- <div class="uk-flex uk-flex-middle">
                             <a href="" title ="Advanced" class="form-advanced lta-btn">Tìm kiếm nâng cao</a>
-                        </div>
+                        </div> -->
                     </form>
 
                     <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -138,7 +138,6 @@
                             </th>
                             <th >ID</th>
                             <th >Tiêu đề sản phẩm</th>
-                            <th class="text-center" >Demo</th>
                             <th  class="text-center" style="width: 100px;">Giá gốc</th>
                             <th  class="text-center" style="width: 130px;">Giá khuyến mại</th>
                             <th class="text-center" style="width: 67px;">Vị trí</th>
@@ -183,7 +182,7 @@
                                 <td>
                                     <div class="uk-flex uk-flex-middle">
                                         <div class="image mr5">
-                                            <span class="image-post img-cover"><img src="<?php echo ((isset($image) ? $image : 'public/not-found.png')); ?>" alt="<?php echo $val['product_title']; ?>" /></span>
+                                            <span class="image-post image-product-edit img-cover"><img src="<?php echo ((isset($image) ? $image : 'public/not-found.png')); ?>" alt="<?php echo $val['product_title']; ?>" /></span>
                                         </div>
                                         <div class="main-info">
                                             <div class="title">
@@ -199,20 +198,17 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">
-                                    <a href="<?php echo site_url('backend/product/product/preview/'.$val['id']); ?>" class=" open-window" >(<i class="fa fa-eye"></i>)</a>
-                                </td>
                                 <td class="text-center update_price td-status" >
                                     <div class="view_price text-success">
-                                        <?php echo (!empty($val['price'])) ? number_format(check_isset($val['price']),0,',','.') : 'Liên hệ' ?>
+                                        <?php echo (!empty($val['price'])) ? $val['price'] : 'Liên hệ' ?>
                                     </div>
-                                    <input type="text" name="price" value="<?php echo ($val['price'] != '' || $val['price'] == 0) ? $val['price'] : '0' ?>" data-id="<?php echo $val['objectid'] ?>" data-field="price" class="int index_update_price form-control" style="text-align: right;display:none; padding: 6px 3px;">
+                                    <input type="text" name="price" value="<?php echo ($val['price'] != '' || $val['price'] == 0) ? $val['price'] : '0' ?>" data-id="<?php echo $val['objectid'] ?>" data-field="price" class=" index_update_price form-control" style="text-align: right;display:none; padding: 6px 3px;">
                                 </td>
                                 <td class="text-center update_price text-primary">
                                     <div class="view_price text-success">
-                                        <?php echo (($val['price_promotion'] != '' || $val['price_promotion'] != 0) ? number_format(check_isset($val['price_promotion']),0,',','.') : '0') ?>
+                                        <?php echo (($val['price_promotion'] != '' || $val['price_promotion'] != 0) ? $val['price_promotion'] : '0') ?>
                                     </div>
-                                    <input type="text" name="price_promotion" value="<?php echo (($val['price_promotion'] != '' || $val['price_promotion'] != 0) ? $val['price_promotion'] : '0') ?>" data-id="<?php echo $val['objectid'] ?>" data-field="price_promotion" class="int index_update_price form-control" style="text-align: right;display:none; padding: 6px 3px;">
+                                    <input type="text" name="price_promotion" value="<?php echo (($val['price_promotion'] != '' || $val['price_promotion'] != 0) ? $val['price_promotion'] : '0') ?>" data-id="<?php echo $val['objectid'] ?>" data-field="price_promotion" class=" index_update_price form-control" style="text-align: right;display:none; padding: 6px 3px;">
                                 </td>
                                 <td class="text-center text-primary">
                                     <?php echo form_input('order['.$val['id'].']', $val['order'], 'data-module="'.$module.'" data-id="'.$val['id'].'"  class="form-control sort-order" placeholder="Vị trí" style="width:50px;text-align:right;"');?>
@@ -238,7 +234,7 @@
                                 
                                 <td class="text-center td-status" data-field="publish" data-module="<?php echo $module; ?>" data-where="id"><?php echo $status; ?></td>
                                 <td class="text-center">
-                                    <a type="button" data-toggle="modal" data-target="#add_combo" href="" class="btn btn-success add-combo-modal" data-id="<?php echo $val['id'] ?>" data-title="<?php echo $val['product_title'] ?>" data-module="<?php echo $module ?>"><i class="fa fa-ticket" aria-hidden="true"></i></a>
+                                    <a type="button" data-toggle="modal" data-target="#add_combo" href="" class="btn btn-success edit-info-product mr5" data-id="<?php echo $val['id'] ?>"  data-module="<?php echo $module ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                     <a type="button" href="<?php echo base_url('backend/product/product/update/'.$val['id']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                     <a type="button" href="<?php echo base_url('backend/product/product/delete/'.$val['id']) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </td>
@@ -363,67 +359,4 @@
       </div>  
  </div> 
 
- <div id="add_combo" class="modal fade va-general">  
-      <div class="modal-dialog">  
-           <div class="modal-content">  
-                <div class="modal-header">
-                    <div class="uk-flex uk-flex-space-between uk-flex-middle" >
-                        <h4 class="modal-title">Tạo combo cho Sản phẩm (Tổng số: <span class="count-combo">5</span> Combo) </h4>  
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>  
-                    </div>  
-                </div>  
-                <div class="modal-body">  
-                    <div class="add-new-combo-box">
-                        <form method="post" class="uk-clearfix form-add-combo" data-module="<?php echo $module ?>" >  
-                            <div class="va-input-general mb15">
-                                <div class="uk-grid uk-grid-medium uk-grid-width-1-2 uk-clearfix">
-                                    <div class="form-row mb10">
-                                        <label class="control-label text-left">
-                                            <span>Sản phẩm</span>
-                                        </label>
-                                        <div class="form-row">
-                                            <?php echo form_dropdown('objectid', '', NULL, 'class="form-control select_combo_multiple select_current_product" multiple="multiple" data-title="Nhập 2 kí tự để tìm kiếm..."  style="width: 100%;" data-join="'.$module.'_translate" data-module="'.$module.'" data-select="title"'); ?>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mb10">
-                                        <label class="control-label text-left">
-                                            <span>Thời gian</span>
-                                        </label>
-                                        <div class="form-row">
-                                            <input type="text" name="time_end" autocomplete="off" value="" class="form-control datetimepicker">
-                                        </div>
-                                    </div>
-                                    <div class="form-row mb10">
-                                        <label class="control-label text-left">
-                                            <span>Loại combo</span>
-                                        </label>
-                                        <div class="form-row">
-                                            <select name="type" class="select2 form-control select-combo-type">
-                                                <option value="normal" selected="selected">Combo giảm theo giá tiền</option>
-                                                <option value="percent">Combo giảm theo phần trăm</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mb10">
-                                        <label class="control-label text-left">
-                                            <span>Giá trị </span><span class="text-danger">(VD: 1, 2, 1.1, 1.2,...)</span>
-                                        </label>
-                                        <div class="form-row">
-                                            <input type="text" name="value" class=" form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="submit"  value="Tạo combo" class="btn btn-success float-right" />  
-                        </form> 
-                    </div>
-                    <h2>Danh sách Combo</h2>
-                    <hr>
-                    <div class="wrap-combo-list">
-                        
-                    </div>
-                </div>   
-           </div>  
-      </div>  
- </div> 
- 
+<?php echo view('backend/product/common/modal_detail_product') ?>

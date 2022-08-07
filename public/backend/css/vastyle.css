@@ -961,3 +961,16 @@ input[type=file]:focus, input[type=checkbox]:focus, input[type=radio]:focus{
 #add_combo .select2-container--default .select2-search--inline .select2-search__field {
     width: 100% !important;
 }
+.image-product-edit,
+.nd_accordion .extend {
+    cursor: pointer;
+}
+
+.remove-table-child th{
+    background: #1c84c6;
+    color: #fff;
+}
+
+.remove-table-child td{
+    background: blanchedalmond;
+}

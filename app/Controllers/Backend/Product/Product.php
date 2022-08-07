@@ -558,12 +558,6 @@ class Product extends BaseController{
 		}else{
 			$image = 'public/not-found.png';
 		}
-		$price = $this->request->getPost('price');
-		$price = str_replace('.', '', $price);
-		$price = (float)$price;
-		$price_promotion = $this->request->getPost('promotion_price');
-		$price_promotion = str_replace('.', '', $price_promotion);
-		$price_promotion = (float)$price_promotion;
 		$time = str_replace("/","-",$this->request->getPost('time_end'));
  		$end = gettime($time, 'datetime');
 		$store = [
@@ -576,15 +570,14 @@ class Product extends BaseController{
  			'album' => json_encode($this->request->getPost('album'), TRUE),
  			'publish' => $this->request->getPost('publish'),
  			'sub_album' => json_encode($this->request->getPost('sub_album'), TRUE),
- 			'price' => $price,
+ 			'price' => $this->request->getPost('price'),
  			'image' => $image,
  			'time_end' => $end,
- 			'price_promotion' => $price_promotion,
+ 			'price_promotion' => $this->request->getPost('price_promotion'),
  			'bar_code' => $this->request->getPost('bar_code'),
  			'icon' => $this->request->getPost('icon'),
  			'model' => $this->request->getPost('model'),
  		];
-		// pre($store);
  		if($param['method'] == 'create' && isset($param['method'])){
  			$store['created_at'] = $this->currentTime;
  			$store['rate'] = 5;

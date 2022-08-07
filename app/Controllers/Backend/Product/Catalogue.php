@@ -24,7 +24,6 @@ class Catalogue extends BaseController{
  			$session->setFlashdata('message-danger', 'Bạn không có quyền truy cập vào chức năng này!');
  			return redirect()->to(BASE_URL.'backend/dashboard/dashboard/index');
 		}
-
 		helper(['mypagination']);
 		$page = (int)$page;
 		$perpage = ($this->request->getGet('perpage')) ? $this->request->getGet('perpage') : 20;
@@ -55,7 +54,7 @@ class Catalogue extends BaseController{
 
 			$languageDetact = $this->detect_language();
 			$this->data['productCatalogueList'] = $this->AutoloadModel->_get_where([
-				'select' => 'tb1.id, tb2.title, tb1.lft, tb1.rgt, tb1.level, tb2.canonical, (SELECT fullname FROM user WHERE user.id = tb1.userid_created) as creator, tb1.userid_updated, tb1.publish, tb1.order, tb1.hot, tb1.created_at, tb1.updated_at,'.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
+				'select' => 'tb1.id, tb2.title, tb1.lft, tb1.rgt, tb1.level, tb2.canonical, (SELECT fullname FROM user WHERE user.id = tb1.userid_created) as creator, tb1.userid_updated, tb1.publish, tb1.order, tb1.hot, tb1.created_at, tb1.updated_at, (SELECT COUNT(product.id) FROM product WHERE tb1.id = product.catalogueid AND product.deleted_at = 0) as count_product, '.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
 				'table' => $this->data['module'].' as tb1',
 				'join' =>  [
 					[
@@ -68,7 +67,6 @@ class Catalogue extends BaseController{
 				'start' => $page * $config['per_page'],
 				'order_by'=> 'lft asc'
 			], TRUE);
-			// pre($this->data['productCatalogueList']);
 		}
 
 		$this->data['template'] = 'backend/product/catalogue/index';

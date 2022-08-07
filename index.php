@@ -1,5 +1,4 @@
 <?php
-
 /*
 	HT VIETNAM FILE CONFIG
 */

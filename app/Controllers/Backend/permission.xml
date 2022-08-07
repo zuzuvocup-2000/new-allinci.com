@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<permissions>
-		<title>Nhóm - [Sản phẩm]</title>
+		<title>Nhóm - [Sản phẩm]</title>\
 		<item>
 			<param>backend/product/catalogue/index</param>
 			<description>Xem</description>
@@ -21,6 +21,10 @@
 	</permissions>
 	<permissions>
 		<title>Danh sách - [Sản phẩm]</title>
+		<item>
+			<param>change_image</param>
+			<description>Chỉnh sửa giao diện</description>
+		</item>
 		<item>
 			<param>backend/product/product/index</param>
 			<description>Xem</description>

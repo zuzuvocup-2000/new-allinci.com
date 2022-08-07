@@ -1,264 +1,297 @@
-<?php $actual_link = trim("$_SERVER[REQUEST_SCHEME]://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>
 <?php
-	$model = new App\Models\AutoloadModel();
-	$mainNav = get_menu(['keyword' => 'main-menu','language' => $language,'output' => 'array']);
-	$cart = \Config\Services::cart();
-	$cartTotal = $cart->contents();
-	$price_voucher = check_voucher();
+	$currentDay = date('Y-m-d H:i:s');
+	$currentDayStart = $currentDay.' 00:00:00';
+	$currentDayEnd = $currentDay.' 23:59:59';
+
+
+	$promotion  = $this->Autoload_Model->_get_where([
+		'select' => 'title, album, description',
+		'table' => 'promotion',
+		'where' => [
+			'publish' => 1,
+		],
+	]);
+
+	if(!isset($promotion) || is_array($promotion) == false || count($promotion) == 0){ 
+		$promotion  = $this->Autoload_Model->_get_where([
+			'select' => 'title, album, description',
+			'table' => 'promotion',
+			'where' => [
+				'start_date <=' => $currentDay,
+				'end_date >=' => $currentDay,
+			],
+		]);
+    }
+
+
+	$post  = $this->Autoload_Model->_get_where([
+		'select' => 'id',
+		'table' => 'article',
+		'where' => [
+			'created >=' => $currentDayStart,
+			'created <=' => $currentDayEnd,
+			'catalogueid' => 2,
+		],
+		'count' => TRUE
+	]);
 ?>
-<?php $cookie = (isset($_COOKIE['product_wishlist']) && $_COOKIE['product_wishlist'] != '' ? explode(',', $_COOKIE['product_wishlist']) : []) ?>
-<?php $auth = (isset($_COOKIE[AUTH.'member']) ? json_decode($_COOKIE[AUTH.'member'], true) : []) ?>
-<header class="pc-header uk-visible-large">
-	<div class="banner-header-top bg-general" style="background-image: url(<?php echo $general['banner_header'] ?>);">
-		<div class="uk-container uk-container-center">
-			<div class="uk-position-relative">
-				<div class="btn-cart-hd">
-					<a href="<?php echo 'gio-hang'.HTSUFFIX ?>" class="mr10">Mua ngay</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<section class="upper pt20 pb20">
-		<div class="uk-container uk-container-center">
-			<div class="uk-flex uk-flex-middle uk-flex-space-between container">
-				<div class="logo" itemscope itemtype="http://schema.org/Hotel">
-					<a itemprop="url" href="" title="<?php echo $general['homepage_brand'] ?>">
-						<img src="<?php echo $general['homepage_logo'] ?>" alt="<?php echo $general['homepage_brand'] ?>" itemprop="logo" />
-					</a>
-				</div>
-				<div class="pc-search header-search">
-					<div class="uk-flex uk-flex-middle">
-						<div class="info-hd">
-							<div class="uk-flex uk-flex-middle">
-								<div class="img img-scaledown">
-									<img src="/public/phone.png" alt="">
-								</div>
-								<div class="info-wrap-hd">
-									<div class="info-title-hd">Hotline bán hàng</div>
-									<div class="info-data-hd"><?php echo $general['contact_hotline'] ?></div>
-								</div>
-							</div>
-						</div>
-						<div class="info-hd">
-							<div class="uk-flex uk-flex-middle">
-								<div class="img img-scaledown">
-									<img src="/public/mail.png" alt="">
-								</div>
-								<div class="info-wrap-hd">
-									<div class="info-title-hd">Email hỗ trợ</div>
-									<div class="info-data-hd"><?php echo $general['contact_email'] ?></div>
-								</div>
-							</div>
-						</div>
-						<form action="<?php echo HTSEARCH.HTSUFFIX ?>" method="get" class="uk-form form uk-clearfix uk-position-relative">
-							<div class="form-row text-row input-hd-search">
-								<input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : '' ?>" class="uk-width-1-1 input-text" placeholder="Tìm kiếm..." />
-							</div>
-							<button type="submit" name="" class="btn-submit"><img src="/public/search.png" alt=""></button>
-						</form>
-						<span class="divider"></span>
-						<a href="wishlist" class="wishlist">
-							<i class="d-icon-heart">
-							<span class="wishlist-count"><?php echo count($cookie) ?></span>
-							</i>
+<header class="pc-header uk-visible-large" id="#" data-uk-sticky>
+	<section class="upper">
+		<div class="uk-container uk-container-2 uk-container-center">
+			<div class="uk-flex uk-flex-middle uk-flex-space-between">
+				<?php echo logo(); ?>
+				<div class="uk-flex uk-flex-middle">
+ 					<?php echo $this->load->view('homepage/frontend/core/navigation'); ?>
+ 					<div class="mb_toolbox uk-flex uk-flex-middle">
+						<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo base64_encode(json_encode($promotion)) ?>">
+							<img src="template/frontend/resources/img/icon/cart_black.png" alt="" style="height: 33px">
+							<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : ''; ?></span>
 						</a>
-						<span class="divider"></span>
-						<div class="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
-							<a class="cart-toggle label-block link loadding-cart">
-								<div class="cart-label d-lg-show">
-									<span class="cart-name">Giỏ hàng:</span>
-									<span class="cart-price"><?php echo number_format(($cart->total() - $price_voucher > 0 ? $cart->total() - $price_voucher : 0),0,',','.') ?> ₫</span>
-								</div>
-								<i class="d-icon-bag"><span class="cart-count"><?php echo count($cartTotal) ?></span></i>
-							</a>
-							<div class="cart-overlay"></div>
-							<!-- End Cart Toggle -->
-							<div class="dropdown-box">
-								<div class="cart-header">
-									<h4 class="cart-title">Giỏ hàng</h4>
-									<a class="btn btn-dark btn-link btn-icon-right btn-close">Đóng<i class="d-icon-arrow-right"></i><span class="sr-only">Giỏ hàng</span></a>
-								</div>
-								<div class="products scrollable list-cart__loadding">
-									<p style="margin-top: 25px;">Không có sản phẩm nào trong giỏ hàng!</p>
-								</div>
-							</div>
-							<!-- End Dropdown Box -->
-						</div>
 					</div>
 				</div>
 			</div>
-			<!-- .container -->
 		</div>
-	</section>
-	<!-- .upper -->
+	</section> <!-- .upper -->
+	<?php 
+		$menuPrd = layout_control(array(
+			'layoutid' => 2,
+			'children' => array(
+				'flag' => true,
+				'post' => true,
+				'limit' => 10,
+			),
+			'post' => array(
+				'flag' => false,
+				'limit' => 8
+			)
+		), false);
+	 ?>
+
+	 <?php if(isset($menuPrd['catalogue']) && is_array($menuPrd['catalogue'])  && count($menuPrd['catalogue'])){ ?>
+		<?php foreach ($menuPrd['catalogue'] as $keyCat => $valCat) {?>
+			<?php if(isset($valCat['children']) && is_array($valCat['children'])  && count($valCat['children'])){ ?>
+	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
+				<!-- <div class="uk-container uk-container-center"> -->
+					<header class="panel-head">
+						<div class="uk-overflow-container">
+						   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
+							<?php foreach ($valCat['children'] as $keyChild => $valChild) {?>
+					     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>"><?php echo $valChild['title'] ?></a></li>
+				   			<?php } ?>
+						   </ul>
+					   </div>
+					</header>
+				<!-- </div> -->
+			</section>
+		   <?php } ?>
+		<?php } ?>	
+	<?php } ?>
+</header>
+<header class="mobile-header uk-clearfix uk-hidden-large" id="#" data-uk-sticky="">
+	<section class="upper">
+		<div class="uk-flex uk-flex-middle uk-flex-space-between">
+			<div class="mr30">
+				<a class="moblie-menu-btn skin-1" href="#offcanvas" class="offcanvas" data-uk-offcanvas="{target:'#offcanvas'}">
+					<span>Menu</span>
+				</a>
+			</div>
+			<div class="logo"><a href="" title="Logo"><img src="<?php echo $this->general['homepage_logo']; ?>" alt="Logo" /></a></div>
+			<?php /*
+			<a class="mobile-cart" href="<?php echo site_url('thanh-toan'); ?>" title="Giỏ hàng">
+				<span class="quantity js_total_item_cart"><?php echo $this->cart->total_items(); ?></span>
+			</a>
+			*/ ?>
+			<div class="mb_toolbox uk-flex uk-flex-middle">
+				<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo base64_encode(json_encode($promotion)) ?>">
+					<img src="template/frontend/resources/img/icon/cart_black.png" alt="" style="height: 33px;">
+					<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : ''; ?></span>
+				</a>
+			</div>
+		</div>
+	</section><!-- .upper -->
+	<?php /*
 	<section class="lower">
-		<div class="uk-container uk-container-center">
-			<nav class="main-nav uk-flex uk-flex-middle uk-flex-space-between">
-				<ul class="uk-navbar-nav uk-clearfix main-menu">
-					<?php if(isset($mainNav['data']) && is_array($mainNav['data']) && count($mainNav['data'])){
-						foreach ($mainNav['data'] as $value) {
-					?>
-						<li>
-							<a href="<?php echo $value['canonical'] ?>" title="<?php echo $value['title'] ?>">
-								<?php echo $value['title'] ?>
-							</a>
-							<?php if(isset($value['children']) && is_array($value['children']) && count($value['children'])){ ?>
-								<div class="dropdown-menu">
-									<ul class="uk-list sub-menu">
-										<?php foreach ($value['children'] as $valueChildren) { ?>
-											<li><a href="<?php echo $valueChildren['canonical'] ?>" title="<?php echo $valueChildren['title'] ?>"><?php echo $valueChildren['title'] ?></a></li>
-										<?php } ?>
-									</ul>
-								</div>
-							<?php } ?>
-						</li>
-					<?php }} ?>
-				</ul>
-				<ul class="uk-list social-list-hd uk-flex uk-flex-middle">
-					<li><a href="<?php echo $general['social_facebook'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/fb.png" alt=""></a></li>
-					<li><a href="<?php echo $general['social_twitter'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/tt.png" alt=""></a></li>
-					<li><a href="<?php echo $general['social_insta'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/insta.png" alt=""></a></li>
-					<li><a href="<?php echo $general['social_google'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/gg.png" alt=""></a></li>
-					<li><a href="<?php echo $general['social_tiktok'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/tiktok.png" alt=""></a></li>
-					<li><a href="<?php echo $general['social_youtube'] ?>" target="_blank" class="img img-scaledown"><img src="/public/youtube.png" alt=""></a></li>
-				</ul>
-			</nav>
-			<!-- .main-nav -->
+		<div class="mobile-search">
+			<form action="<?php echo site_url('tim-kiem'); ?>" method="GET" class="uk-form form">
+				<input type="text" name="keyword" class="uk-width-1-1 input-text" placeholder="Bạn muốn tìm gì hôm nay?" />
+				<button type="submit" name="" value="" class="btn-submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+			</form>
 		</div>
 	</section>
-	<!-- .lower -->
-</header>
-<!-- .header -->
-<!-- MOBILE HEADER -->
-<?php $cookie = (isset($_COOKIE['product_wishlist']) && $_COOKIE['product_wishlist'] != '' ? explode(',', $_COOKIE['product_wishlist']) : []) ?>
-<?php $auth = (isset($_COOKIE[AUTH.'member']) ? json_decode($_COOKIE[AUTH.'member'], true) : []) ?>
+	*/ ?>
 
-<header class="header uk-hidden-large">
-	<div class="banner-header-top bg-general" style="background-image: url(<?php echo $general['banner_header']; ?>);">
-		<div class="uk-container uk-container-center">
-			<div class="uk-position-relative">
-				<div class="btn-cart-hd">
-					<a href="<?php echo 'gio-hang' . HTSUFFIX; ?>" class="mr10">Mua ngay</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End HeaderTop -->
-	<div class="sticky-content-wrapper" style="height: 105px;"><div class="header-middle sticky-header fix-top sticky-content">
-		<div class="container">
-			<div class="header-left">
-				<a href="#" class="mobile-menu-toggle">
-					<i class="d-icon-bars2"></i>
-				</a>
-				<a href="/" class="logo">
-					<img src="<?php echo $general['homepage_logo']; ?>" alt="logo-toancau2" width="153" height="44">
-				</a>
-				<!-- End Logo -->
-				<div class="header-search hs-simple">
-					<form action="<?php echo site_url('tim-kiem' . HTSUFFIX); ?>" class="input-wrapper">
-						<input type="text" class="form-control" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" name="keyword" autocomplete="off" placeholder="Tìm kiếm..." required="">
-						<button class="btn btn-search" type="submit">
-						<i class="d-icon-search"></i>
-						</button>
-					</form>
-				</div>
-			<div class="header-right">
-				<span class="divider"></span>
-				<a href="wishlist" class="wishlist" style="display: block;">
-					<i class="d-icon-heart">
-					<span class="wishlist-count"><?php echo count($cookie); ?></span>
-					</i>
-				</a>
-				<div class="dropdown cart-dropdown type2 cart-offcanvas mr-0 mr-lg-2">
-					<a class="cart-toggle label-block link loadding-cart">
-						<div class="cart-label d-lg-show">
-							<span class="cart-name">Giỏ hàng:</span>
-							<span class="cart-price"><?php echo number_format($cart->total() - $price_voucher > 0 ? $cart->total() - $price_voucher : 0, 0, ',', '.'); ?> ₫</span>
-						</div>
-						<i class="d-icon-bag"><span class="cart-count"><?php echo count($cartTotal); ?></span></i>
-					</a>
-					<div class="cart-overlay"></div>
-					<div class="dropdown-box">
-						<div class="cart-header">
-							<h4 class="cart-title">Giỏ hàng</h4>
-							<a class="btn btn-dark btn-link btn-icon-right btn-close">Đóng<i class="d-icon-arrow-right"></i><span class="sr-only">Giỏ hàng</span></a>
-						</div>
-						<div class="products scrollable list-cart__loadding">
-							<p style="margin-top: 25px;">Không có sản phẩm nào trong giỏ hàng!</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<input type="hidden" name="" class="count_wishlist" value="<?php echo count($cookie); ?>">
-	<div class="header-bottom d-lg-show">
-		<div class="container">
-			<div class="header-logo__fix">
-				<a href="/" class="logo">
-					<img src="<?php echo $general['homepage_logo']; ?>" alt="logo-toancau2" width="153" height="44">
-				</a>
-			</div>
-			<div class="header-left">
-				<nav class="main-nav">
-					<ul class="menu">
-						<?php if (isset($mainNav['data']) && is_array($mainNav['data']) && count($mainNav['data'])) {
-          					foreach ($mainNav['data'] as $key => $value) { ?>
-							<li class="<?php echo isset($value['children']) && is_array($value['children']) && count($value['children']) ? 'submenu' : ''; ?>">
-								<a href="<?php echo $value['canonical']; ?>"><?php echo $value['title']; ?></a>
-								<?php if (isset($value['children']) && is_array($value['children']) && count($value['children'])) { ?>
-									<ul>
-										<?php foreach ($value['children'] as $keyChild => $valueChild) { ?>
-											<li style="text-transform: capitalize;"><a href="<?php echo $valueChild['canonical']; ?>"><?php echo $valueChild['title']; ?></a></li>
-										<?php } ?>
-									</ul>
-								<?php } ?>
-							</li>
-						<?php }} ?>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
-</header>
+	<?php 
+		$menuPrd = layout_control(array(
+			'layoutid' => 2,
+			'children' => array(
+				'flag' => true,
+				'post' => true,
+				'limit' => 10,
+			),
+			'post' => array(
+				'flag' => false,
+				'limit' => 8
+			)
+		), false);
+	 ?>
 
-<div class="mobile-menu-wrapper">
-    <div class="mobile-menu-overlay">
-    </div>
-    <a class="mobile-menu-close" href="#"><i class="d-icon-times"></i></a>
-    <div class="mobile-menu-container scrollable">
-        <form action="<?php echo site_url('tim-kiem' . HTSUFFIX); ?>" class="input-wrapper">
-            <input type="text" class="form-control" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" autocomplete="off"
-            placeholder="Tìm kiếm..." required />
-            <button class="btn btn-search" type="submit">
-            <i class="d-icon-search"></i>
-            </button>
-        </form>
-        <!-- End of Search Form -->
-        <ul class="mobile-menu mmenu-anim mb30">
-        	<?php if (isset($mainNav['data']) && is_array($mainNav['data']) && count($mainNav['data'])) {
-             foreach ($mainNav['data'] as $key => $value) { ?>
-	            <li>
-	                <a <?php echo isset($value['children']) && is_array($value['children']) && count($value['children']) ? 'class="show-menu-level2" data-show="1"' : ''; ?> href="<?php echo $value['canonical']; ?>" ><?php echo $value['title']; ?></a>
-	                <?php if (isset($value['children']) && is_array($value['children']) && count($value['children'])) { ?>
-						<ul>
-							<?php foreach ($value['children'] as $keyChild => $valueChild) { ?>
-								<li ><a href="<?php echo $valueChild['canonical']; ?>"><?php echo $valueChild['title']; ?></a></li>
-							<?php } ?>
-						</ul>
-					<?php } ?>
-	            </li>
-	        <?php }
-         } ?>
-        </ul>
-
-        <ul class="uk-list social-list-hd uk-flex uk-flex-middle uk-flex-center">
-			<li><a href="<?php echo $general['social_facebook'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/fb.png" alt=""></a></li>
-			<li><a href="<?php echo $general['social_twitter'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/tt.png" alt=""></a></li>
-			<li><a href="<?php echo $general['social_insta'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/insta.png" alt=""></a></li>
-			<li><a href="<?php echo $general['social_google'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/gg.png" alt=""></a></li>
-			<li><a href="<?php echo $general['social_tiktok'] ?>" target="_blank" class="img img-scaledown mr10"><img src="/public/tiktok.png" alt=""></a></li>
-			<li><a href="<?php echo $general['social_youtube'] ?>" target="_blank" class="img img-scaledown"><img src="/public/youtube.png" alt=""></a></li>
-		</ul>
+	 <?php if(isset($menuPrd['catalogue']) && is_array($menuPrd['catalogue'])  && count($menuPrd['catalogue'])){ ?>
+		<?php foreach ($menuPrd['catalogue'] as $keyCat => $valCat) {?>
+			<?php if(isset($valCat['children']) && is_array($valCat['children'])  && count($valCat['children'])){ $post = 0;?>
+	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
+				<!-- <div class="uk-container uk-container-center"> -->
+					<header class="panel-head">
+						<div id="div-scroll" class="uk-overflow-container">
+						   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs va-list lta-list" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
+							<?php foreach ($valCat['children'] as $keyChild => $valChild) {?>
+					     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>" id= "post-<?php echo $post?>"><?php echo $valChild['title'] ?></a></li>
+				   			<?php $post = $post+1; } ?>
+						   </ul>
+					   </div>
+					</header>
+				<!-- </div> -->
+			</section>
+		   <?php } ?>
+		<?php } ?>	
+	<?php } ?>
+	
+</header><!-- .mobile-header -->
+<div id="my-id" class="uk-modal promotion-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-lightbox uk-modal-dialog-large">
+        <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
+        <span class="img-cover">
+    		<img src="<?php echo isset($promotion['album'])? json_decode($promotion['album'], true)[0] : ''; ?>" alt="">
+    		<?php if ($promotion['title'] != ''): ?>
+    			<span class="dt_title_promotion"><?php echo $promotion['title'] ?></span>
+    		<?php endif ?>
+    		<?php if ($promotion['description'] != ''): ?>
+    			<span class="dt_desc_promotion"><?php echo $promotion['description'] ?></span>
+    		<?php endif ?>
+        </span>
     </div>
 </div>
+
+<style>
+	.dt_title_promotion{
+		display: block;
+		padding: 10px;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+	.dt_desc_promotion{
+		display: block;
+		text-align: center;
+		padding: 10px;
+		padding-top: 0;
+	}
+</style>
+
+<script>
+	var time = 3*60*1000;
+	<?php if(isset($promotion) && is_array($promotion) && count($promotion)){ ?>
+		$(window).load(function(){
+			 var date = new Date();
+			 var minutes = 5;
+			 date.setTime(date.getTime() + (minutes * 60 * 1000));
+			// set cookie
+			// console.log(typeof $.cookie('popup'));
+
+	    	if (typeof $.cookie('popup') === 'undefined'){
+	    		setTimeout(function(){
+	    			show_modal(); 
+	    		}, 3000);
+			 	$.cookie('popup', '1', { expires: date, path: '/' });
+			} else {
+				circle_time(time);
+			}
+			$('#my-id').on({
+		        'show.uk.modal': function(){
+
+		        },
+		        'hide.uk.modal': function(){
+		        	// $('#my-id').removeClass('active');
+		        	circle_time(time);
+		        }
+		    });
+		    function circle_time(time){
+				setTimeout(function(){
+					show_modal();
+				}, time);
+			}
+
+			function show_modal(){
+				var modal = UIkit.modal("#my-id");
+				modal.show();
+			}
+		});
+	<?php } ?>
+	
+</script>
+
+<style>
+	.hd-cart {
+	    display: inline-block;
+	    position: relative;
+	    font-size: 18px;
+	    color: #232323;
+	    margin: 0 20px 0 15px;
+	}
+
+	.hd-cart .quantity {
+	    position: absolute;
+	    top: 5px;
+	    margin-top: -15px;
+	    right: -8px;
+	    font-size: 12px;
+	    /*padding: 2px 0 0 1px;*/
+	    width: 20px;
+	    height: 20px;
+	    line-height: 20px;
+	    color: #fff;
+	    background: #e4405f;
+	    border-radius: 50%;
+	    font-weight: 400;
+	    text-align: center;
+	    white-space: nowrap;
+	    vertical-align: baseline;
+	}
+	.hd-cart.style-2 .quantity {
+	    right: -15px;
+	}
+</style>
+
+<script>
+	$(document).ready(function(){
+		$('.hd-cart').on('click', function(){
+			let _this = $(this);
+			let promotion = JSON.parse(atob(_this.attr('data-promotion')));
+			let image = JSON.parse(promotion.album);
+			let promotionImage = image[0];
+			$('.promotion-modal').find('img').attr('src', promotionImage);
+
+			var modal = UIkit.modal(".promotion-modal");
+			modal.show();
+
+			return false;
+		});
+	});
+
+
+	$(document).on('click','.scroll-move',function(e){
+		let _this = $(this);
+		let id = _this.attr('data-post');
+		id = id.split("-");
+		let distance = 0;
+		 for(let i =0; i< id[1]; i++){
+		 	id_part = '#post-'+i;
+		 	distance = distance + $(id_part).outerWidth()
+		 }
+		let width = $('.lta-list').get(0).scrollWidth;
+		$('#div-scroll').scrollLeft(distance);
+	});
+</script>
+
+
+
+

@@ -432,14 +432,14 @@
 									<label class="control-label text-left">
 										<span>Giá Sản phẩm <b class="text-danger">(*)</b></span>
 									</label>
-									<?php echo form_input('price', validate_input(set_value('price', (isset($product['price'])) ? $product['price'] : '')), 'class="form-control price int" placeholder="" id="price" autocomplete="off"'); ?>
+									<?php echo form_input('price', validate_input(set_value('price', (isset($product['price'])) ? $product['price'] : '')), 'class="form-control price " placeholder="" id="price" autocomplete="off"'); ?>
 								</div>
 							</div>
 							<div class="col-lg-12 m-b">
 								<label class="control-label ">
 									<span>Giá khuyến mại</span>
 								</label>
-								<?php echo form_input('promotion_price', set_value('promotion_price', (isset($product['price_promotion'])) ? $product['price_promotion'] : ''), 'class="form-control price int" placeholder="" id="promotion_price" autocomplete="off"'); ?>
+								<?php echo form_input('promotion_price', set_value('promotion_price', (isset($product['price_promotion'])) ? $product['price_promotion'] : ''), 'class="form-control price " placeholder="" id="promotion_price" autocomplete="off"'); ?>
 							</div>
 							<div class="col-lg-12 mb15">
 								<label class="control-label ">

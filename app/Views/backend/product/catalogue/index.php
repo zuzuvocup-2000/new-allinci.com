@@ -46,9 +46,6 @@
                                         <option value="90">90 bản ghi</option>
                                         <option value="100">100 bản ghi</option>
                                     </select>
-                                    
-                                   
-                                    
                                 </div>
                             </div>
                             <div class="toolbox">
@@ -69,14 +66,14 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <table class="table table-striped table-bordered nd_accordion table-hover dataTables-example">
                         <thead>
                         <tr>
                             <th style="width: 35px;">
                                 <input type="checkbox" id="checkbox-all">
                                 <label for="check-all" class="labelCheckAll"></label>
                             </th>
-                            <th >Tiêu đề nhóm</th>
+                            <th  style="width: 270px;">Tiêu đề nhóm</th>
                             <?php if(isset($languageList) && is_array($languageList) && count($languageList)){ ?>
                             <?php foreach($languageList as $key => $val){ ?>
                             <th class="text-center" style="width: 100px;">
@@ -99,16 +96,23 @@
                                 $status = ($val['publish'] == 1) ? '<span class="text-success">Active</span>'  : '<span class="text-danger">Deactive</span>';
 
                             ?>
-                            <tr id="post-<?php echo $val['id']; ?>" data-id="<?php echo $val['id']; ?>">
+                            <tr id="post-<?php echo $val['id']; ?>" class="" data-id="<?php echo $val['id']; ?>" data-module="<?php echo $module ?>">
                                 <td>
                                     <input type="checkbox" name="checkbox[]" value="<?php echo $val['id']; ?>" class="checkbox-item">
                                     <div for="" class="label-checkboxitem"></div>
                                 </td>
-                                <td <?php echo ($val['level'] == 1) ? 'class="text-success text-bold"' : '' ?>>
-                                    <a href="<?php echo base_url('backend/product/catalogue/update/'.$val['id'].'') ?>">
-                                        <?php echo str_repeat('|----', (($val['level'] > 0)?($val['level'] - 1):0)).$val['title']; ?>
-                                        </a>
-                                    </td>
+                                <td <?php echo ($val['level'] == 1) ? 'class="text-success text-bold"' : '' ?> >
+                                    <div class="uk-flex uk-flex-middle uk-flex-space-between">
+                                        <div class="uk-flex uk-flex-middle">
+                                            <a href="<?php echo base_url('backend/product/catalogue/update/'.$val['id'].'') ?>">
+                                                <?php echo str_repeat('|----', (($val['level'] > 0)?($val['level'] - 1):0)).$val['title']; ?> (<?php echo $val['count_product'] ?>)
+                                            </a>
+                                        </div>
+                                        <?php if($val['count_product'] > 0){ ?>
+                                            <div class="extend" data-extend="plus"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                        <?php } ?>
+                                    </div>
+                                </td>
 
                                 <?php if(isset($languageList) && is_array($languageList) && count($languageList)){ ?>
                                 <?php foreach($languageList as $keyLanguage => $valLanguage){ ?>
@@ -156,3 +160,6 @@
         </div>
     </div>
 </div>
+
+<?php echo view('backend/product/common/modal_detail_product') ?>
+

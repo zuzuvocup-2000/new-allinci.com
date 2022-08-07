@@ -1,4 +1,6 @@
 <?php
+
+
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
@@ -7,7 +9,7 @@ define('BACKEND_DIRECTORY', 'admin');
 define('AUTH', 'HTVIETNAM_');
 define('ASSET_BACKEND', 'public/backend/');
 
-define('BASE_URL', 'http://va.truemed.com/');
+define('BASE_URL', 'http://new-allinci.com/');
 define('HTSUFFIX', '');
 
 define('DEBUG', 0);
@@ -21,5 +23,5 @@ define('HTMAP', 'contact-map');
 
 define('HTDBHOST', 'localhost');
 define('HTDBUSER', 'root');
-define('HTDBPASS', 'root');
-define('HTDBNAME', 'truemed_data');
+define('HTDBPASS', '');
+define('HTDBNAME', 'new_allinci');
