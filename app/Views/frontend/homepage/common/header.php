@@ -1,39 +1,29 @@
 <?php
+	$model = new App\Models\AutoloadModel();
 	$currentDay = date('Y-m-d H:i:s');
 	$currentDayStart = $currentDay.' 00:00:00';
 	$currentDayEnd = $currentDay.' 23:59:59';
 
 
-	$promotion  = $this->Autoload_Model->_get_where([
-		'select' => 'title, album, description',
-		'table' => 'promotion',
-		'where' => [
-			'publish' => 1,
-		],
-	]);
+	// $promotion  = $this->Autoload_Model->_get_where([
+	// 	'select' => 'title, album, description',
+	// 	'table' => 'promotion',
+	// 	'where' => [
+	// 		'publish' => 1,
+	// 	],
+	// ]);
 
-	if(!isset($promotion) || is_array($promotion) == false || count($promotion) == 0){ 
-		$promotion  = $this->Autoload_Model->_get_where([
-			'select' => 'title, album, description',
-			'table' => 'promotion',
-			'where' => [
-				'start_date <=' => $currentDay,
-				'end_date >=' => $currentDay,
-			],
-		]);
-    }
+	// if(!isset($promotion) || is_array($promotion) == false || count($promotion) == 0){ 
+	// 	$promotion  = $this->Autoload_Model->_get_where([
+	// 		'select' => 'title, album, description',
+	// 		'table' => 'promotion',
+	// 		'where' => [
+	// 			'start_date <=' => $currentDay,
+	// 			'end_date >=' => $currentDay,
+	// 		],
+	// 	]);
+ //    }
 
-
-	$post  = $this->Autoload_Model->_get_where([
-		'select' => 'id',
-		'table' => 'article',
-		'where' => [
-			'created >=' => $currentDayStart,
-			'created <=' => $currentDayEnd,
-			'catalogueid' => 2,
-		],
-		'count' => TRUE
-	]);
 ?>
 <header class="pc-header uk-visible-large" id="#" data-uk-sticky>
 	<section class="upper">
@@ -41,11 +31,11 @@
 			<div class="uk-flex uk-flex-middle uk-flex-space-between">
 				<?php echo logo(); ?>
 				<div class="uk-flex uk-flex-middle">
- 					<?php echo $this->load->view('homepage/frontend/core/navigation'); ?>
+ 					<?php echo view('frontend/homepage/common/navigation'); ?>
  					<div class="mb_toolbox uk-flex uk-flex-middle">
-						<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo base64_encode(json_encode($promotion)) ?>">
+						<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo isset($promotion) ? base64_encode(json_encode($promotion)) : '' ?>">
 							<img src="template/frontend/resources/img/icon/cart_black.png" alt="" style="height: 33px">
-							<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : ''; ?></span>
+							<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : '0'; ?></span>
 						</a>
 					</div>
 				</div>
@@ -104,7 +94,7 @@
 			<div class="mb_toolbox uk-flex uk-flex-middle">
 				<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo base64_encode(json_encode($promotion)) ?>">
 					<img src="template/frontend/resources/img/icon/cart_black.png" alt="" style="height: 33px;">
-					<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : ''; ?></span>
+					<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : '0'; ?></span>
 				</a>
 			</div>
 		</div>
