@@ -6,6 +6,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 define('BACKEND_DIRECTORY', 'admin');
 
+define('SYSTEM_NAME', 'AIC');
 define('AUTH', 'HTVIETNAM_');
 define('ASSET_BACKEND', 'public/backend/');
 
@@ -14,7 +15,7 @@ define('HTSUFFIX', '');
 
 define('DEBUG', 0);
 define('COMPRESS', 0);
-define('CMS_NAME', 'Anh Minh Media CMS 3.0');
+define('CMS_NAME', 'AIC CMS 3.0');
 define('API_WIDGET', 'http://widget.htweb.vn');
 
 define('HTSEARCH', 'tim-kiem');

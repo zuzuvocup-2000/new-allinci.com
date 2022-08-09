@@ -14,7 +14,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <span class="m-r-sm text-muted welcome-message">Chào mừng các bạn đã đến với trang quản trị được xây dựng bởi Anh Minh Media</span>
+                <span class="m-r-sm text-muted welcome-message">Chào mừng các bạn đã đến với trang quản trị được xây dựng bởi <?php echo SYSTEM_NAME ?></span>
             </li>
 
             <li class="dropdown">

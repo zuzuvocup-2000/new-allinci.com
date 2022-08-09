@@ -57,13 +57,13 @@
                 <!-- <li class="<?php echo ( $uriModule == 'landingpage') ? 'active'  : '' ?>">
                     <a href="<?php echo base_url('backend/landingpage/landingpage/index') ?>"><i class="fa fa-file"></i><span class="nav-label">QL Landingpage</span> </a>
                 </li> -->
-               <li class="<?php echo ( $uriModule == 'media') ? 'active'  : '' ?>">
+                <!-- <li class="<?php echo ( $uriModule == 'media') ? 'active'  : '' ?>">
                     <a href="index.html"><i class="fa fa-camera-retro" aria-hidden="true"></i> <span class="nav-label">QL Dự án</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="<?php echo ( $uriModule_name == 'catalogue') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/media/catalogue/index') ?>">QL Nhóm Dự án</a></li>
                         <li class="<?php echo ( $uriModule_name == 'media') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/media/media/index') ?>">QL Dự án</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- <li class="<?php echo ( $uriModule == 'file') ? 'active'  : '' ?>">
                     <a href="index.html"><i class="fa fa-file-text" aria-hidden="true"></i> <span class="nav-label">QL Tài liệu</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -97,23 +97,23 @@
                     </li>*/
 
                  ?>
-                <li class="<?php echo ( $uriModule == 'contact' || $uriModule == 'comment') ? 'active'  : '' ?>">
+                <!-- <li class="<?php echo ( $uriModule == 'contact' || $uriModule == 'comment') ? 'active'  : '' ?>">
                     <a href="index.html"><i class="fa fa-id-card" aria-hidden="true"></i> <span class="nav-label">QL Liên hệ</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li class="<?php echo ( $uriModule_name == 'contact') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/contact/contact/index') ?>"><?php echo translate('cms_lang.sidebar.sb_contact', $language) ?></a></li>
                         <li class="<?php echo ( $uriModule_name == 'comment') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/comment/comment/index') ?>">QL Comment</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="<?php echo ( $uriModule == 'language' || $uriModule == 'system' || $uriModule == 'panel' || $uriModule == 'slide' || $uriModule == 'widget' || $uriModule == 'menu') ? 'active'  : '' ?>">
                     <a href="index.html"><i class="fa fa-cog"></i> <span class="nav-label"><?php echo translate('cms_lang.sidebar.sb_setting', $language) ?></span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="<?php echo ( $uriModule_name == 'language') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/language/language/index') ?>"><?php echo translate('cms_lang.sidebar.sb_language', $language) ?></a></li>
+                        <!-- <li class="<?php echo ( $uriModule_name == 'language') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/language/language/index') ?>"><?php echo translate('cms_lang.sidebar.sb_language', $language) ?></a></li> -->
                         <li class="<?php echo ( $uriModule_name == 'slide') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/slide/slide/index') ?>"><?php echo translate('cms_lang.sidebar.sb_slide', $language) ?></a></li>
                         <li class="<?php echo ( $uriModule_name == 'panel') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/panel/panel/index') ?>"><?php echo translate('cms_lang.sidebar.sb_panel', $language) ?></a></li>
                         <li class="<?php echo ( $uriModule_name == 'general') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/general/index') ?>"><?php echo translate('cms_lang.sidebar.sb_general', $language) ?></a></li>
-                        <li class="<?php echo ( $uriModule_name == 'widget') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/widget/widget/index') ?>"><?php echo translate('cms_lang.sidebar.sb_widget', $language) ?></a></li>
+                        <!-- <li class="<?php echo ( $uriModule_name == 'widget') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/widget/widget/index') ?>"><?php echo translate('cms_lang.sidebar.sb_widget', $language) ?></a></li> -->
                         <li class="<?php echo ( $uriModule_name == 'menu') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/menu/menu/listmenu') ?>"><?php echo translate('cms_lang.sidebar.sb_menu', $language) ?></a></li>
-                        <li class="<?php echo ( $uriModule_name == 'system') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/system/store') ?>">Quản lý Hệ thống</a></li>
+                        <!-- <li class="<?php echo ( $uriModule_name == 'system') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/system/store') ?>">Quản lý Hệ thống</a></li> -->
                     </ul>
                 </li>
             </ul>
