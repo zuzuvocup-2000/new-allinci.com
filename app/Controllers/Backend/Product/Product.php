@@ -73,7 +73,7 @@ class Product extends BaseController{
 
 			$languageDetact = $this->detect_language();
 			$this->data['productList'] = $this->AutoloadModel->_get_where([
-				'select' => 'tb1.id, tb1.catalogueid as cat_id, tb1.price,tb1.hot,tb1.order, tb1.price_promotion, tb1.bar_code, tb1.model,  tb1.album,  tb2.catalogueid, tb1.publish, tb3.title as product_title, tb1.catalogue, tb2.objectid, tb3.content, tb3.sub_title, tb3.sub_content, tb3.canonical, tb3.meta_title, tb3.meta_description, tb3.made_in, tb4.title as cat_title ,'.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
+				'select' => 'tb1.id, tb1.catalogueid as cat_id, tb1.image, tb1.price,tb1.hot,tb1.order, tb1.price_promotion, tb1.bar_code, tb1.model,  tb1.album,  tb2.catalogueid, tb1.publish, tb3.title as product_title, tb1.catalogue, tb2.objectid, tb3.content, tb3.sub_title, tb3.sub_content, tb3.canonical, tb3.meta_title, tb3.meta_description, tb3.made_in, tb4.title as cat_title ,'.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
 				'table' => $this->data['module'].' as tb1',
 				'where' => $where,
 				'where_in' => $catalogue['where_in'],

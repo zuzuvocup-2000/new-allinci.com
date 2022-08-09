@@ -31,15 +31,24 @@ class Auth extends BaseController{
 		 			'select' => 'id, fullname, email, (SELECT permission FROM user_catalogue WHERE user_catalogue.id = user.catalogueid) as permission',
 		 			'where' => ['email' => $this->request->getVar('email'),'deleted_at' => 0]
 		 		]);
+		 		$user['permission'] = json_decode($user['permission'],true);
 		 		$cookieAuth = [
 		 			'id' => $user['id'],
 		 			'fullname' => $user['fullname'],
 		 			'email' => $user['email'],
 		 			// 'permission' => base64_encode($user['permission']),
 		 		];
+		 		$permission = [];
+		 		if(isset($user['permission']) && is_array($user['permission']) && count($user['permission'])){
+		 			foreach ($user['permission'] as $value) {
+		 			    if($value == 'All' || $value == 'folderView' || $value == 'folderCreate' || $value == 'folderRename' || $value == 'folderDelete' || $value == 'fileView' || $value == 'fileUpload' || $value == 'fileRename' || $value == 'fileDelete'){
+		 			    	$permission[] = $value;
+		 			    }
+		 			}
+		 		}
 
-		 		$_SESSION['permission'] = base64_encode($user['permission']);
 		 		setcookie(AUTH.'backend', json_encode($cookieAuth), time() + 1*24*3600, "/");
+		 		setcookie(AUTH.'permission', json_encode($permission), time() + 1*24*3600, "/");
 		 		$_update = [
 		 			'last_login' => gmdate('Y-m-d H:i:s', time() + 7*3600),
 					'user_agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -63,7 +72,9 @@ class Auth extends BaseController{
 
 	public function logout(){
 	 	unset($_COOKIE[AUTH.'backend']); 
+	 	unset($_COOKIE[AUTH.'permission']); 
         setcookie(AUTH.'backend', null, -1, '/'); 
+        setcookie(AUTH.'permission', null, -1, '/'); 
         return redirect()->to(BASE_URL.BACKEND_DIRECTORY);
 	}
 

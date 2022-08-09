@@ -181,7 +181,7 @@ class Product extends BaseController{
 		$module_extract = explode("_", $param['module']);
 
 		$productList = $this->AutoloadModel->_get_where([
-			'select' => 'tb1.id, tb1.catalogueid as cat_id, tb1.price,tb1.hot,tb1.order, tb1.price_promotion, tb1.bar_code, tb1.model,  tb1.album,   tb1.publish, tb2.title as product_title, tb1.catalogue, tb2.objectid, tb2.content, tb2.sub_title, tb2.sub_content, tb2.canonical, tb2.meta_title, tb2.meta_description, tb2.made_in, '.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
+			'select' => 'tb1.id, tb1.catalogueid as cat_id, tb1.image, tb1.price,tb1.hot,tb1.order, tb1.price_promotion, tb1.bar_code, tb1.model,  tb1.album,   tb1.publish, tb2.title as product_title, tb1.catalogue, tb2.objectid, tb2.content, tb2.sub_title, tb2.sub_content, tb2.canonical, tb2.meta_title, tb2.meta_description, tb2.made_in, '.((isset($languageDetact['select'])) ? $languageDetact['select'] : ''),
 			'table' => $module_extract[0].' as tb1',
 			'where' => [
 				'tb1.catalogueid' => $param['id'],
@@ -200,7 +200,7 @@ class Product extends BaseController{
 		if(isset($productList) && is_array($productList) && count($productList)){
 		$languageList = get_list_language(['currentLanguage' => $this->currentLanguage()]);
             $html = $html .'<tr class="remove-table-child" data-catalogueid="'.$param['id'].'">';
-                $html = $html .'<th >ID</th>';
+                $html = $html .'<th class="text-center">ID</th>';
                 $html = $html .'<th >Tiêu đề sản phẩm</th>';
                 if(isset($languageList) && is_array($languageList) && count($languageList)){
                 foreach($languageList as $key => $val){
@@ -217,7 +217,7 @@ class Product extends BaseController{
                 $html = $html .'<th class="text-center">Thao tác</th>';
             $html = $html .'</tr>';
                 foreach($productList as $key => $val){
-                    $image = get_first_img($val['album']);
+                    $image = $val['image'];
                     $catalogue = json_decode($val['catalogue'], TRUE);
                     $cat_list = [];
                     if(isset($catalogue) && is_array($catalogue) && count($catalogue)){
@@ -228,7 +228,7 @@ class Product extends BaseController{
                     }
                     $status = ($val['publish'] == 1) ? '<span class="text-success">Active</span>'  : '<span class="text-danger">Deactive</span>';
                 $html = $html.'<tr class="remove-table-child" data-catalogueid="'.$param['id'].'" id="product-'.$val['id'].'" data-id="'.$val['id'].'">';
-                    $html = $html.'<td>'.$val['id'].'</td>';
+                    $html = $html.'<td class="text-center">'.$val['id'].'</td>';
                     $html = $html.'<td>';
                        $html = $html.' <div class="uk-flex uk-flex-middle">';
                             $html = $html.'<div class="image mr5">';

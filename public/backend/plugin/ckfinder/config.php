@@ -48,10 +48,7 @@ function CheckAuthentication()
 
 	return true;
 }
-	// $cookieAuth = (isset($_COOKIE[AUTH.'Backend']) ? $_COOKIE[AUTH.'Backend']:'');
-	// $cookieAuth = json_decode($cookieAuth, true);
-	// $permission = json_decode(base64_decode($cookieAuth['permission'],true));
-
+	
 
 
 
@@ -164,28 +161,37 @@ Subfolders inherit their default settings from their parents' definitions.
 	- The "resourceType" attribute accepts the special value '*', which
 	  means "all resource types".
 */
-
+$cookieAuth = (isset($_COOKIE[AUTH.'permission']) ? $_COOKIE[AUTH.'permission'] : '');
+$permission = json_decode($cookieAuth, true);
+$folderView = (in_array('folderView', $permission)? true : false);
+$folderCreate = (in_array('folderCreate', $permission)? true : false);
+$folderRename = (in_array('folderRename', $permission)? true : false);
+$folderDelete = (in_array('folderDelete', $permission)? true : false);
+$fileView = (in_array('fileView', $permission)? true : false);
+$fileUpload = (in_array('fileUpload', $permission)? true : false);
+$fileRename = (in_array('fileRename', $permission)? true : false);
+$fileDelete = (in_array('fileDelete', $permission)? true : false);
 $config['AccessControl'][] = Array(
 		'role' => '*',
 		'resourceType' => '*',
 		'folder' => '/',
-		'folderView' => true,
-		'folderCreate' => true,
-		'folderRename' => true,
-		'folderDelete' => true,
-		'fileView' =>  true,
-		'fileUpload' =>  true,
-		'fileRename' =>  true,
-		'fileDelete' =>  true,
+		// 'folderView' => true,
+		// 'folderCreate' => true,
+		// 'folderRename' => true,
+		// 'folderDelete' => true,
+		// 'fileView' =>  true,
+		// 'fileUpload' =>  true,
+		// 'fileRename' =>  true,
+		// 'fileDelete' =>  true,
 
-		// 'folderView' => (in_array('folderView', $permission))? true : false,
-		// 'folderCreate' => (in_array('folderCreate', $permission))? true : false,
-		// 'folderRename' => (in_array('folderRename', $permission))? true : false,
-		// 'folderDelete' => (in_array('folderDelete', $permission))? true : false,
-		// 'fileView' =>  (in_array('fileView', $permission))?  true : false,
-		// 'fileUpload' =>  (in_array('fileUpload', $permission))? true : false,
-		// 'fileRename' =>  (in_array('fileRename', $permission))? true : false,
-		// 'fileDelete' =>  (in_array('fileDelete', $permission))? true : false,
+		'folderView' => $folderView,
+		'folderCreate' => $folderCreate,
+		'folderRename' => $folderRename,
+		'folderDelete' => $folderDelete,
+		'fileView' =>  $fileView,
+		'fileUpload' =>  $fileUpload,
+		'fileRename' =>  $fileRename,
+		'fileDelete' =>  $fileDelete,
 	// );
 
 		);

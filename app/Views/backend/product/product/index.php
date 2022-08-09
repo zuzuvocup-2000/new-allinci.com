@@ -136,7 +136,7 @@
                                 <input type="checkbox" id="checkbox-all">
                                 <label for="check-all" class="labelCheckAll"></label>
                             </th>
-                            <th >ID</th>
+                            <th class="text-center" style="width: 35px;">ID</th>
                             <th >Tiêu đề sản phẩm</th>
                             <th  class="text-center" style="width: 100px;">Giá gốc</th>
                             <th  class="text-center" style="width: 130px;">Giá khuyến mại</th>
@@ -158,7 +158,7 @@
                             <?php foreach($productList as $key => $val){ ?>
 
                             <?php
-                                $image = get_first_img($val['album']);
+                                $image = $val['image'];
                                 $catalogue = json_decode($val['catalogue'], TRUE);
                                 $cat_list = [];
                                 if(isset($catalogue) && is_array($catalogue) && count($catalogue)){
@@ -178,7 +178,7 @@
                                     <input type="checkbox" name="checkbox[]" value="<?php echo $val['id']; ?>" class="checkbox-item">
                                     <div for="" class="label-checkboxitem"></div>
                                 </td>
-                                <td><?php echo $val['id'] ?></td>
+                                <td class="text-center"><?php echo $val['id'] ?></td>
                                 <td>
                                     <div class="uk-flex uk-flex-middle">
                                         <div class="image mr5">
