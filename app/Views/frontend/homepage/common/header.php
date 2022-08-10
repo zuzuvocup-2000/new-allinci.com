@@ -42,30 +42,16 @@
 			</div>
 		</div>
 	</section> <!-- .upper -->
-	<?php 
-		$menuPrd = layout_control(array(
-			'layoutid' => 2,
-			'children' => array(
-				'flag' => true,
-				'post' => true,
-				'limit' => 10,
-			),
-			'post' => array(
-				'flag' => false,
-				'limit' => 8
-			)
-		), false);
-	 ?>
-
-	 <?php if(isset($menuPrd['catalogue']) && is_array($menuPrd['catalogue'])  && count($menuPrd['catalogue'])){ ?>
-		<?php foreach ($menuPrd['catalogue'] as $keyCat => $valCat) {?>
-			<?php if(isset($valCat['children']) && is_array($valCat['children'])  && count($valCat['children'])){ ?>
+	
+	 <?php if(isset($panel['menu-top']) && is_array($panel['menu-top'])  && count($panel['menu-top'])){ ?>
+		<?php foreach ($panel['menu-top'] as $keyCat => $valCat) {?>
+			<?php if(isset($valCat['data']) && is_array($valCat['data'])  && count($valCat['data'])){ ?>
 	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
 				<!-- <div class="uk-container uk-container-center"> -->
 					<header class="panel-head">
 						<div class="uk-overflow-container">
 						   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
-							<?php foreach ($valCat['children'] as $keyChild => $valChild) {?>
+							<?php foreach ($valCat['data'] as $keyChild => $valChild) {?>
 					     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>"><?php echo $valChild['title'] ?></a></li>
 				   			<?php } ?>
 						   </ul>
@@ -85,14 +71,14 @@
 					<span>Menu</span>
 				</a>
 			</div>
-			<div class="logo"><a href="" title="Logo"><img src="<?php echo $this->general['homepage_logo']; ?>" alt="Logo" /></a></div>
+			<div class="logo"><a href="" title="Logo"><img src="<?php echo $general['homepage_logo']; ?>" alt="Logo" /></a></div>
 			<?php /*
 			<a class="mobile-cart" href="<?php echo site_url('thanh-toan'); ?>" title="Giỏ hàng">
 				<span class="quantity js_total_item_cart"><?php echo $this->cart->total_items(); ?></span>
 			</a>
 			*/ ?>
 			<div class="mb_toolbox uk-flex uk-flex-middle">
-				<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo base64_encode(json_encode($promotion)) ?>">
+				<a class="hd-cart style-2 no-hover" href="#" onclick="return false" title="Giỏ hàng" data-promotion="<?php echo isset($promotion) ? base64_encode(json_encode($promotion)) : '' ?>">
 					<img src="template/frontend/resources/img/icon/cart_black.png" alt="" style="height: 33px;">
 					<span class="quantity js_total_item_cart"><?php echo (isset($promotion) && is_array($promotion) && count($promotion)) ? '1' : '0'; ?></span>
 				</a>
@@ -110,30 +96,17 @@
 	</section>
 	*/ ?>
 
-	<?php 
-		$menuPrd = layout_control(array(
-			'layoutid' => 2,
-			'children' => array(
-				'flag' => true,
-				'post' => true,
-				'limit' => 10,
-			),
-			'post' => array(
-				'flag' => false,
-				'limit' => 8
-			)
-		), false);
-	 ?>
+	
 
-	 <?php if(isset($menuPrd['catalogue']) && is_array($menuPrd['catalogue'])  && count($menuPrd['catalogue'])){ ?>
-		<?php foreach ($menuPrd['catalogue'] as $keyCat => $valCat) {?>
-			<?php if(isset($valCat['children']) && is_array($valCat['children'])  && count($valCat['children'])){ $post = 0;?>
+	 <?php if(isset($panel['menu-top']) && is_array($panel['menu-top'])  && count($panel['menu-top'])){ ?>
+		<?php foreach ($panel['menu-top'] as $keyCat => $valCat) {?>
+			<?php if(isset($valCat['data']) && is_array($valCat['data'])  && count($valCat['data'])){ $post = 0;?>
 	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
 				<!-- <div class="uk-container uk-container-center"> -->
 					<header class="panel-head">
 						<div id="div-scroll" class="uk-overflow-container">
 						   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs va-list lta-list" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
-							<?php foreach ($valCat['children'] as $keyChild => $valChild) {?>
+							<?php foreach ($valCat['data'] as $keyChild => $valChild) {?>
 					     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>" id= "post-<?php echo $post?>"><?php echo $valChild['title'] ?></a></li>
 				   			<?php $post = $post+1; } ?>
 						   </ul>
@@ -151,10 +124,10 @@
         <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
         <span class="img-cover">
     		<img src="<?php echo isset($promotion['album'])? json_decode($promotion['album'], true)[0] : ''; ?>" alt="">
-    		<?php if ($promotion['title'] != ''): ?>
+    		<?php if (isset($promotion['title']) && $promotion['title'] != ''): ?>
     			<span class="dt_title_promotion"><?php echo $promotion['title'] ?></span>
     		<?php endif ?>
-    		<?php if ($promotion['description'] != ''): ?>
+    		<?php if (isset($promotion['description']) && $promotion['description'] != ''): ?>
     			<span class="dt_desc_promotion"><?php echo $promotion['description'] ?></span>
     		<?php endif ?>
         </span>
