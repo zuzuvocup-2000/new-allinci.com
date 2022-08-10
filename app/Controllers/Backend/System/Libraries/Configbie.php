@@ -45,15 +45,27 @@ class ConfigBie{
 				// 'image' => array('type' => 'images', 'label' => 'Ảnh liên hệ trang chủ'),
 			),
 		);
-		$data['banner'] =  array(
-			'label' => 'Cấu hình khác',
+		$data['color'] =  array(
+			'label' => 'Màu sắc',
 			'description' => 'Một số cấu hình được thêm vào tại đây',
 			'value' => array(
-				'header' => array('type' => 'images', 'label' => 'Banner đầu Header'),
-				'footer' => array('type' => 'images', 'label' => 'Banner chân trang'),
-				'news' => array('type' => 'images', 'label' => 'Banner tin tức'),
+				'gach' => array('type' => 'text', 'label' => '3 gạch menu'),
+				'tag' => array('type' => 'text', 'label' => 'Tag promotion'),
+				'icon' => array('type' => 'text', 'label' => 'Icon menu nhóm'),
+				'phone' => array('type' => 'text', 'label' => 'Phone'),
+				'icon_top' => array('type' => 'text', 'label' => 'Icon top'),
+				'ngang' => array('type' => 'text', 'label' => 'Dấu gạch ngang openning hour'),
 			),
 		);
+		// $data['banner'] =  array(
+		// 	'label' => 'Cấu hình khác',
+		// 	'description' => 'Một số cấu hình được thêm vào tại đây',
+		// 	'value' => array(
+		// 		'header' => array('type' => 'images', 'label' => 'Banner đầu Header'),
+		// 		'footer' => array('type' => 'images', 'label' => 'Banner chân trang'),
+		// 		'news' => array('type' => 'images', 'label' => 'Banner tin tức'),
+		// 	),
+		// );
 		$data['seo'] =  array(
 			'label' => 'Cấu hình thẻ tiêu đề',
 			'description' => 'Cài đặt đầy đủ Thẻ tiêu đề và thẻ mô tả giúp xác định cửa hàng của bạn xuất hiện trên công cụ tìm kiếm.',
@@ -94,10 +106,11 @@ class ConfigBie{
 				'link' => array('type' => 'text', 'label' => 'Linkedin'),
 				'insta' => array('type' => 'text', 'label' => 'Instagram'),
 				'skype' => array('type' => 'text', 'label' => 'Skype'),
-				'zalo' => array('type' => 'text', 'label' => 'Zalo'),
+				'telegram' => array('type' => 'text', 'label' => 'Telegram ( Username - not Phone )'),
+				// 'zalo' => array('type' => 'text', 'label' => 'Zalo'),
 				'whatsapp' => array('type' => 'text', 'label' => 'Whatsapp'),
 				'pinterest' => array('type' => 'text', 'label' => 'Pinterest'),
-				'tiktok' => array('type' => 'text', 'label' => 'Tiktok'),
+				// 'tiktok' => array('type' => 'text', 'label' => 'Tiktok'),
 			),
 		);
 		// $data['payment'] =  array(
