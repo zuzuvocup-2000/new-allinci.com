@@ -20,6 +20,7 @@ class ConfigBie{
 			'value' => array(
 				'company' => array('type' => 'text', 'label' => 'Tên công ty'),
 				'brand' => array('type' => 'text', 'label' => 'Tên thương hiệu'),
+				'color' => array('type' => 'text', 'label' => 'Tông màu Website (Mã HEX)'),
 				'slogan' => array('type' => 'text', 'label' => 'Slogan'),
 				'logo' => array('type' => 'images', 'label' => 'Logo'),
 				'logo_ft' => array('type' => 'images', 'label' => 'Logo Chân trang'),
@@ -47,18 +48,6 @@ class ConfigBie{
 				'map' => array('type' => 'textarea', 'label' => 'Bản đồ','title' => 'Hướng dẫn thiết lập bản đồ','link' => 'https://webchuanseoht.com/huong-dan-thiet-lap-ban-do-google-map.html'),
 				'map_link' => array('type' => 'text', 'label' => 'Link Bản đồ'),
 				// 'image' => array('type' => 'images', 'label' => 'Ảnh liên hệ trang chủ'),
-			),
-		);
-		$data['color'] =  array(
-			'label' => 'Màu sắc',
-			'description' => 'Một số cấu hình được thêm vào tại đây',
-			'value' => array(
-				'gach' => array('type' => 'text', 'label' => '3 gạch menu'),
-				'tag' => array('type' => 'text', 'label' => 'Tag promotion'),
-				'icon' => array('type' => 'text', 'label' => 'Icon menu nhóm'),
-				'phone' => array('type' => 'text', 'label' => 'Phone'),
-				'icon_top' => array('type' => 'text', 'label' => 'Icon top'),
-				'ngang' => array('type' => 'text', 'label' => 'Dấu gạch ngang openning hour'),
 			),
 		);
 		// $data['banner'] =  array(

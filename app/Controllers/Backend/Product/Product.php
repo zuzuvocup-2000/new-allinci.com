@@ -564,6 +564,7 @@ class Product extends BaseController{
  			'catalogueid' => (int)$this->request->getPost('catalogueid'),
  			'catalogue' => json_encode($catalogue),
  			'productid' => $this->request->getPost('productid'),
+ 			'landing_link' => $this->request->getPost('landing_link'),
  			'articleid' => $this->request->getPost('articleid'),
  			'productid_original' => $productid_original,
  			// 'brandid' => $this->request->getPost('brandid'),
@@ -810,7 +811,7 @@ class Product extends BaseController{
 	private function get_data_module($id = 0){
 		$session = session();
 		$flag = $this->AutoloadModel->_get_where([
-			'select' => 'tb1.id, tb1.catalogue,tb1.time_end,tb1.sub_album,tb2.sub_album_title,tb2.video,tb2.shock, tb1.bar_code, tb1.brandid, tb1.catalogueid, tb1.model, tb1.price_promotion, tb1.price, tb1.productid, tb1.id, tb1.id, tb1.id, tb2.title, tb2.objectid, tb2.sub_title, tb2.sub_content, tb2.description, tb2.canonical,  tb2.content, tb2.meta_title, tb2.meta_description, tb1.album, tb1.publish, tb2.made_in, tb1.productid_original, tb1.articleid, tb1.icon, tb2.type, tb1.hinhthuc, tb2.huong, tb2.info, tb1.length, tb1.width, tb2.brand',
+			'select' => 'tb1.id, tb1.catalogue,tb1.time_end,tb1.sub_album,tb2.sub_album_title,tb2.video,tb2.shock, tb1.bar_code, tb1.brandid, tb1.catalogueid, tb1.model, tb1.price_promotion, tb1.price, tb1.productid, tb1.id, tb1.id, tb1.id, tb2.title, tb2.objectid, tb2.sub_title, tb2.sub_content, tb2.description, tb2.canonical,  tb2.content, tb2.meta_title, tb2.meta_description, tb1.album, tb1.publish, tb2.made_in, tb1.productid_original, tb1.articleid, tb1.icon, tb2.type, tb1.hinhthuc, tb2.huong, tb2.info, tb1.length, tb1.width, tb2.brand, tb1.landing_link',
 			'table' => $this->data['module'].' as tb1',
 			'join' =>  [
 				[

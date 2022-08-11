@@ -158,7 +158,7 @@ if (! function_exists('post_and_cat')){
         	$data[$key]['post'] = [];
         }
         if($param['module'][0] == 'product'){
-            $param['select_cat'] = $param['select_cat'].',tb3.rate, tb3.price, tb3.price_promotion, tb3.hot, tb2.info, tb3.bar_code, tb3.length, tb3. width';
+            $param['select_cat'] = $param['select_cat'].',tb3.rate, tb3.price, tb3.price_promotion, tb3.hot, tb2.info, tb3.bar_code, tb3.length, tb3. width, tb3.landing_link';
         }
         if($param['module'][0] == 'article'){
             $param['select_cat'] = $param['select_cat'].',tb2.sub_title, tb2.sub_content,';
@@ -193,10 +193,10 @@ if (! function_exists('post_and_cat')){
                     FROM '.$param['module'][0].' as t
                     WHERE tb3.catalogueid = t.catalogueid
                     AND tb3.id <= t.id AND tb3.deleted_at = 0
-                ) <= 8
+                ) <= 12
             ',
             'group_by' => 'tb3.id',
-            'limit' => 12,
+            'limit' => 100,
             'order_by' => 'tb3.order desc, tb3.created_at desc'
         ],TRuE);
         if(isset($mang) &&  is_array($mang)  && count($mang)){
@@ -209,6 +209,7 @@ if (! function_exists('post_and_cat')){
                 }
             }
         }
+
         if(isset($data) && is_array($data) && count($data)){
             foreach ($data as $key => $value) {
                 foreach ($mang as $keyMang => $valueMang) {
@@ -291,7 +292,9 @@ if (! function_exists('only_cat')){
             'group_by' => 'id'
         ],TRuE);
         $query  =  query_get_cat($data);
-        
+        if(isset($param['module'][1]) && $param['module'][0] == 'product' && $param['module'][1] == 'catalogue'){
+            $param['select_cat'].= 'tb1.landing_link';
+        }
         $child = $model->_get_where([
             'select' => 'tb1.id,  tb2.title, tb2.canonical, tb1.image, tb2.description, tb2.icon, tb1.parentid, '.$param['select_cat'],
             'table' => $param['module'][0].'_catalogue as tb1',

@@ -17,7 +17,8 @@ define('DEBUG', 0);
 define('COMPRESS', 0);
 define('CMS_NAME', 'AIC CMS 3.0');
 define('API_WIDGET', 'http://widget.htweb.vn');
-
+define('CURRENCY', '$');
+define('LINK_ICON', 'https://museomix.be/doc/Icons-ET-LineIcons.html');
 define('HTSEARCH', 'tim-kiem');
 define('HTCONTACT', 'contact-us');
 define('HTMAP', 'contact-map');

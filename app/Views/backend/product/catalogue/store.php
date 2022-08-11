@@ -232,6 +232,20 @@
 					</div>
 				</div>
 				<div class="ibox mb20">
+					<div class="ibox-title">
+						<h5>Landing link </h5>
+					</div>
+					<div class="ibox-content">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="form-row">
+									<?php echo form_input('landing_link', validate_input(set_value('landing_link', (isset($product_catalogue['landing_link'])) ? $product_catalogue['landing_link'] : '')), 'class="form-control " ');?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ibox mb20">
 					<div class="ibox-title uk-flex-middle uk-flex uk-flex-space-between">
 						<h5 class="choose-image" style="cursor: pointer;margin:0;">Icon hiển thị </h5>
 						<a href="" title="" data-target="image" class="uploadIcon">Upload hình ảnh</a>

@@ -1,15 +1,15 @@
-<?php $main_nav = get_menu(array('keyword' => 'main','language' => 'vi', 'output' => 'array')); ?>
-<?php if(isset($main_nav) && is_array($main_nav) && count($main_nav)){ ?>
+<?php $main_nav = get_menu(array('keyword' => 'main-menu','language' => 'vi', 'output' => 'array')); ?>
+<?php if(isset($main_nav['data']) && is_array($main_nav['data']) && count($main_nav['data'])){ ?>
 <section class="lower">
 	<div class="uk-container uk-container-center">
 		<div class="uk-flex uk-flex-middle">
 			<nav class="main-nav">
 				<ul class="uk-navbar-nav uk-clearfix main-menu">
-					<?php foreach($main_nav as $key => $val){ ?>
+					<?php foreach($main_nav['data'] as $key => $val){ ?>
 					<?php 
-						$val['link'] = basename($val['link']);
+						$val['canonical'] = basename($val['canonical']);
 					?>
-					<li class="" data-url="<?php echo $val['link']; ?>"><a href="<?php echo $val['link']; ?>" title="<?php echo $val['title']; ?>">
+					<li class="" data-url="<?php echo $val['canonical']; ?>"><a href="<?php echo $val['canonical']; ?>" title="<?php echo $val['title']; ?>">
 						<span><?php echo $val['title'] ?></span>
 					</a>
 						<?php if(isset($val['children']) && is_array($val['children']) && count($val['children'])){ ?>
@@ -17,7 +17,7 @@
 							<ul class="uk-list children">
 								<?php foreach($val['children'] as $keyItem => $valItem){ ?>
 								<li>
-									<a href="<?php echo $valItem['link'] ?>" title="<?php echo $valItem['title'] ?>" class="">
+									<a href="<?php echo $valItem['canonical'] ?>" title="<?php echo $valItem['title'] ?>" class="">
 										<span><?php echo $valItem['title'] ?></span>
 									</a>
 								</li>

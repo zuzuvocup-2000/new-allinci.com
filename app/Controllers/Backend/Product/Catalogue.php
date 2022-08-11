@@ -219,7 +219,7 @@ class Catalogue extends BaseController{
 
 	private function get_data_module($id = 0){
 		$flag = $this->AutoloadModel->_get_where([
-			'select' => 'tb1.id, tb2.title, tb2.canonical, tb2.description, tb2.content, tb2.meta_title, tb2.meta_description, tb1.parentid, tb1.image, tb1.album, tb1.publish, tb1.lft, tb1.rgt, tb1.level, tb1.icon, tb1.file',
+			'select' => 'tb1.id, tb2.title, tb2.canonical, tb2.description, tb2.content, tb2.meta_title, tb2.meta_description, tb1.parentid, tb1.image, tb1.album, tb1.publish, tb1.lft, tb1.rgt, tb1.level, tb1.icon, tb1.file, tb1.landing_link',
 
 			'table' => $this->data['module'].' as tb1',
 			'join' =>  [
@@ -287,6 +287,7 @@ class Catalogue extends BaseController{
 		$store = [
  			'parentid' => (int)$this->request->getPost('parentid'),
  			'image' => $this->request->getPost('image'),
+ 			'landing_link' => $this->request->getPost('landing_link'),
  			'file' => $this->request->getPost('file'),
  			'album' => json_encode($this->request->getPost('album')),
  			'publish' => $this->request->getPost('publish'),

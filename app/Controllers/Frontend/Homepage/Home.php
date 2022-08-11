@@ -18,13 +18,13 @@ class Home extends FrontendController{
 		$this->data['meta_description'] = (isset($this->data['general']['seo_meta_description']) ? $this->data['general']['seo_meta_description'] : '');
 		$this->data['og_type'] = 'website';
 		$this->data['canonical'] = BASE_URL;
-		// $panel = get_panel([
-		// 	'locate' => 'home',
-		// 	'language' => $this->currentLanguage()
-		// ]);
-  //       foreach ($panel as $key => $value) {
-		// 	$this->data['panel'][$value['keyword']] = $value;
-		// }
+		$panel = get_panel([
+			'locate' => 'home',
+			'language' => $this->currentLanguage()
+		]);
+        foreach ($panel as $key => $value) {
+			$this->data['panel'][$value['keyword']] = $value;
+		}
 
 		$productCatalogueList = $this->AutoloadModel->_get_where([
 			'select' => 'tb1.id, tb2.title,  tb2.canonical,  tb1.hot, tb1.image, tb2.description',

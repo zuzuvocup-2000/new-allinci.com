@@ -400,6 +400,20 @@
 						</div>
 					</div>
 				</div>
+				<div class="ibox mb20">
+					<div class="ibox-title">
+						<h5>Landing link </h5>
+					</div>
+					<div class="ibox-content">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="form-row">
+									<?php echo form_input('landing_link', validate_input(set_value('landing_link', (isset($product['landing_link'])) ? $product['landing_link'] : '')), 'class="form-control " ');?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="ibox mb20 hidden">
                     <div class="ibox-title">Nội dung saleoff</div>
                     <div class="ibox-content">

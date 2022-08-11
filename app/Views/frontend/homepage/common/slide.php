@@ -1,92 +1,73 @@
-<?php
-    $owlInit = array(
-        'lazyload' => true,
-        'loop' => false,
-        'margin' => 15,
-        'autoplay' => false,
-        'autoplayTimeout' => 3000,
-        'items' => 1,
-        'nav' => true,
-        'dots' => true,
-        'navText' => ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-    );
-?>
-<div class="wrap-slide-product">
-    <div class="owl-slide ">
-        <div class="owl-carousel owl-theme" data-owl="<?php echo base64_encode(json_encode($owlInit)); ?>">
-            <?php if(isset($object['album']) && is_array($object['album']) && count($object['album'])){
-            foreach ($object['album'] as $value) {
-            ?>
-                <div class="slide-product-item">
-                    <div class="img-scaledown">
-                        <img src="<?php echo $value ?>" alt="<?php echo $value ?>">
+<?php $slide = get_slide(['keyword' => 'main-slide' , 'language' => $language ]); ?>
+<?php if(isset($slide) && is_array($slide) && count($slide)){ ?>
+<section class="main-slide">
+    <!-- <div class="uk-container uk-container-center uk-container-1"> -->
+        <div class="uk-slidenav-position slide-show" data-uk-slideshow="{autoplay: true, autoplayInterval: 7500, animation: 'random-fx'}">
+            <ul class="uk-slideshow">
+                <?php foreach($slide as $key => $val) { ?>
+
+                    <?php
+                        $title = $val['title'];
+                        $href = $val['canonical'];
+                        $image = $val['image'];
+                        $description = cutnchar(strip_tags($val['description']), 250);
+                    ?>
+                <li>
+                    <div class="slide-content">
+                        <div class="image img-cover"><img src="<?php echo $image; ?>" alt="<?php echo $image; ?>" /></div>
+                        <div class="overlay-slide uk-vertical-align">
+                            <div class="uk-vertical-align-middle">
+                                <h2 class="heading-slide"><span class="line-3 animated slideInDown target"><?php echo $title; ?></span></h2>
+                                <div class="description animated slideInUp target"><?php echo $description; ?></div>
+                            </div>
+                            <!-- container -->
+                        </div>
                     </div>
-                </div>
-            <?php }} ?>
+                </li>
+                <?php } ?>
+            </ul>
+            <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
+            <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
+            <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-center">
+            <?php for($i = 0; $i<count($slide); $i++){ ?>
+                <li data-uk-slideshow-item="<?php echo $i; ?>"><a href=""></a></li>
+            <?php } ?>
+            </ul>
         </div>
-    </div>
-    <div class="row-viewmore-thumb">
-        <div class="col-viewmore-item pop1 gallery">
-            <a href="#" class="pop-gallery">
-                <?php echo render_img(['src' => $object['image']]) ?>
-                <div class="over-gallery">Xem <?php echo (isset($object['album']) ? count($object['album']) : 0) ?> hình</div>
-            </a>
-        </div>
+    <!-- </div> -->
+</section><!-- .main-slide -->
+<?php } ?>
 
-        <div class="col-viewmore-item comment" style="cursor: pointer;">
-            <div class="icon-spec">
-                <?php echo render_img(['src' => 'public/Comments-icon.png']) ?>
-            </div>
-            <div class="title-spec">
-                <a href="#box-danhgia">
-                Xem 273 nhận xét</a>
-            </div>
-        </div>
-        
-        <div class="col-viewmore-item special" style="cursor: pointer;">
-            <div class="icon-spec">
-                <?php echo render_img(['src' => 'public/thong-so-icon.png']) ?>
-            </div>
-            <div class="title-spec"><a href="#box-thongso">Thông số kỹ thuật</a></div>
-        </div>
-        <?php if(isset($object['icon']) && $object['icon'] != ''){ ?>
-            <div class="col-viewmore-item qrcode-prod" title="Soi QR Code để chuyển sang điện thoại. Bấm vào để phóng to, thu nhỏ">
-                <?php echo render_img(['src' => $object['icon'], 'attr' => 'id = "img_qr_code"']) ?>
-            </div>
-            <script>
-                $(document).on('click', '#img_qr_code', function(){
-                    $(this).toggleClass('hover');
+<style>
+    .hide{
+        opacity: 0 !important;
+    }
+</style>
 
-                })
-            </script>
-        <?php } ?>
-        
-    </div>
-</div>
-<section id="popme">
-    <div class="popupGallery">
-        <h2>Bộ hình sản phẩm (<?php echo (isset($object['album']) ? count($object['album']) : 0) ?>)</h2>
-        <a href="#" class="close">x Đóng</a>
-        <div class="gallery">
-            <?php if(isset($object['album']) && is_array($object['album']) && count($object['album'])){
-            foreach ($object['album'] as $value) {
-            ?>
-                <div>
-                    <img id="owl-img-0" src="<?php echo $value ?>" alt="Ảnh">
-                </div>
-            <?php }} ?>
-        </div>
-    </div>
-</section>
 
-<script type="text/javascript">
-    $(document).on('click', '.pop-gallery' , function(){
-        $('#popme').addClass('active')
-        return false
-    })
+<script>
+    
+    var target = $('.target');
 
-    $(document).on('click', '#popme .close' , function(){
-        $('#popme').removeClass('active')
-        return false
-    })
+    var target_title = $('.uk-slideshow .overlay-slide .heading-1>*');
+    var target_description = $('.uk-slideshow .overlay-slide .description');
+    var target_btn = $('.uk-slideshow .overlay-slide .submit');
+    var animate_1 = 'slideInDown';
+    var animate_2 = 'slideInUp';
+    var animate_3 = 'slideInUp';
+
+    UIkit.on('beforeshow.uk.slideshow', function(){
+        target.addClass('hide');
+        target_title.removeClass(animate_1);
+        target_description.removeClass(animate_2);
+        target_btn.removeClass(animate_3);
+    });
+
+    UIkit.on('show.uk.slideshow', function(){
+        target.removeClass('hide');
+        target_title.addClass(animate_1);
+        target_description.addClass(animate_2);
+        target_btn.addClass(animate_3);
+    });
+
 </script>

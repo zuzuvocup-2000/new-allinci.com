@@ -51,25 +51,20 @@
 			</div>
 		</div>
 	</section> <!-- .upper -->
-	
-	 <?php if(isset($panel['menu-top']) && is_array($panel['menu-top'])  && count($panel['menu-top'])){ ?>
-		<?php foreach ($panel['menu-top'] as $keyCat => $valCat) {?>
-			<?php if(isset($valCat['data']) && is_array($valCat['data'])  && count($valCat['data'])){ ?>
-	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
-				<!-- <div class="uk-container uk-container-center"> -->
-					<header class="panel-head">
-						<div class="uk-overflow-container">
-						   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
-							<?php foreach ($valCat['data'] as $keyChild => $valChild) {?>
-					     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>"><?php echo $valChild['title'] ?></a></li>
-				   			<?php } ?>
-						   </ul>
-					   </div>
-					</header>
-				<!-- </div> -->
-			</section>
-		   <?php } ?>
-		<?php } ?>	
+	 <?php if(isset($panel['menu-top']['data']) && is_array($panel['menu-top']['data'])  && count($panel['menu-top']['data'])){ ?>
+    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
+			<!-- <div class="uk-container uk-container-center"> -->
+				<header class="panel-head">
+					<div class="uk-overflow-container">
+					   	<ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
+						<?php foreach ($panel['menu-top']['data'] as $keyChild => $valChild) {?>
+				     		<li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>"><?php echo $valChild['title'] ?></a></li>
+			   			<?php } ?>
+					   </ul>
+				   </div>
+				</header>
+			<!-- </div> -->
+		</section>
 	<?php } ?>
 </header>
 <header class="mobile-header uk-clearfix uk-hidden-large" id="#" data-uk-sticky="">
@@ -107,8 +102,8 @@
 
 	
 
-	 <?php if(isset($panel['menu-top']) && is_array($panel['menu-top'])  && count($panel['menu-top'])){ ?>
-		<?php foreach ($panel['menu-top'] as $keyCat => $valCat) {?>
+	 <?php if(isset($panel['menu-top']['data']) && is_array($panel['menu-top']['data'])  && count($panel['menu-top']['data'])){ ?>
+		<?php foreach ($panel['menu-top']['data'] as $keyCat => $valCat) {?>
 			<?php if(isset($valCat['data']) && is_array($valCat['data'])  && count($valCat['data'])){ $post = 0;?>
 	    	<section class="mobile-hp-topprd hp-panel mb_hd_menu">
 				<!-- <div class="uk-container uk-container-center"> -->
