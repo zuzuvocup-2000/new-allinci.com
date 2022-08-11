@@ -113,7 +113,7 @@
                         <li class="<?php echo ( $uriModule_name == 'general') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/general/index') ?>"><?php echo translate('cms_lang.sidebar.sb_general', $language) ?></a></li>
                         <!-- <li class="<?php echo ( $uriModule_name == 'widget') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/widget/widget/index') ?>"><?php echo translate('cms_lang.sidebar.sb_widget', $language) ?></a></li> -->
                         <li class="<?php echo ( $uriModule_name == 'menu') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/menu/menu/listmenu') ?>"><?php echo translate('cms_lang.sidebar.sb_menu', $language) ?></a></li>
-                        <!-- <li class="<?php echo ( $uriModule_name == 'system') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/system/store') ?>">Quản lý Hệ thống</a></li> -->
+                        <li class="<?php echo ( $uriModule_name == 'system') ? 'active'  : '' ?>"><a href="<?php echo base_url('backend/system/system/store') ?>">Quản lý Hệ thống</a></li>
                     </ul>
                 </li>
             </ul>

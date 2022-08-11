@@ -4,6 +4,15 @@
 	$currentDayStart = $currentDay.' 00:00:00';
 	$currentDayEnd = $currentDay.' 23:59:59';
 
+	$panel_top = get_panel([
+		'locate' => 'home',
+		'language' => $language
+	]);
+	if(isset($panel_top) && is_array($panel_top) && count($panel_top)){
+	    foreach ($panel_top as $key => $value) {
+			$panel[$value['keyword']] = $value;
+		}
+	}
 
 	// $promotion  = $this->Autoload_Model->_get_where([
 	// 	'select' => 'title, album, description',
