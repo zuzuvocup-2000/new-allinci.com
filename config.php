@@ -10,7 +10,7 @@ define('SYSTEM_NAME', 'AIC');
 define('AUTH', 'HTVIETNAM_');
 define('ASSET_BACKEND', 'public/backend/');
 
-define('BASE_URL', 'http://new-allinci.com/');
+define('BASE_URL', 'http://cvg.com/');
 define('HTSUFFIX', '');
 
 define('DEBUG', 0);
@@ -26,4 +26,4 @@ define('HTMAP', 'contact-map');
 define('HTDBHOST', 'localhost');
 define('HTDBUSER', 'root');
 define('HTDBPASS', '');
-define('HTDBNAME', 'new_allinci');
+define('HTDBNAME', 'cvg_data');

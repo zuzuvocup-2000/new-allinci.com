@@ -1,83 +1,155 @@
-<?php
-    $model = new App\Models\AutoloadModel();
-?>
-<div id="homepage" class="page-body">
-    <?php echo  view('frontend/homepage/common/slide'); ?>
-    <?php if(isset($panel['layout-2']['data']) && is_array($panel['layout-2']['data'])  && count($panel['layout-2']['data'])){ ?>
-        <section class="ht2109_panel" id="menu">
-            <div class="uk-container uk-container-center">
-                <div class="panel-head uk-text-center">
-                    <h2 class="heading-1 mb15"><span><?php echo $panel['layout-2']['title'] ?></span></h2>
-                    <div class="subtitle"><?php echo $panel['layout-2']['description'] ?></div>
+<section id="homepage">
+    <div class="panel-search">
+        <div class="uk-container uk-container-center">
+            <div class="search uk-text-center">
+                <form action="">
+                    <h1 class="heading-1">ĐỪNG KINH DOANH KHI CHƯA CÓ TÊN MIỀN</h1>
+                    <div class="form-field">
+                        <input class="input-text" type="text" placeholder="Nhập tên miền đăng ký vào đây">
+                    </div>
+                    <button class="btn btn-submit" value="" type="submit" name="check">Kiểm tra</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel-book">
+        <div class="uk-container uk-container-center">
+            <div class="warpper">
+                <input class="radio" id="one" name="group" type="radio" checked />
+                <input class="radio" id="two" name="group" type="radio" />
+                <input class="radio" id="three" name="group" type="radio" />
+                <input class="radio" id="four" name="group" type="radio" />
+                <input class="radio" id="five" name="group" type="radio" />
+                <div class="tabs">
+                    <label class="tab" id="one-tab" for="one">CGV</label>
+                    <label class="tab" id="two-tab" for="two">About us</label>
+                    <label class="tab" id="three-tab" for="three">Contents</label>
+                    <label class="tab" id="four-tab" for="four">Our team</label>
+                    <label class="tab" id="five-tab" for="five" data-uk-modal="{target:'#my-id'}">Contact</label>
                 </div>
-                <div class="panel-body">
-                    <section class="mobile-hp-topprd hp-panel">
-                        <div class="uk-container uk-container-center">
-                            <?php /*
-                            <header class="panel-head">
-                                <div class="uk-overflow-container">
-                                    <ul class="uk-list uk-clearfix uk-flex uk-flex-middle nav-tabs" data-uk-switcher="{connect:'#hp-prd-1',animation: 'uk-animation-fade, uk-animation-slide-left', swiping: true }">
-                                    <?php foreach ($valCat['post'] as $keyChild => $valChild) {?>
-                                        <li aria-expanded="true" class="<?php echo ($keyChild == 0)? 'uk-active':'' ?>"><a href="#menu" title="<?php echo $valChild['title'] ?>"><?php echo $valChild['title'] ?></a></li>
-                                    <?php } ?>
-                                   </ul>
-                               </div>
-                            </header>
-                            */ ?>
-                            <section class="panel-body">
-                            <ul id="hp-prd-1" class="uk-switcher">
-                                <?php foreach ($panel['layout-2']['data'] as $keyChild => $valChild) {?>
-                                <li>
-                                    <?php if(isset($valChild['post']) && is_array($valChild['post'])  && count($valChild['post'])){ ?>
-                                    <ul class="uk-list uk-clearfix list-art">
-                                        <?php foreach ($valChild['post'] as $keyPost => $valPost) {?>
-                                        <?php        
-                                            $title = $valPost['title'];
-                                            // $href = rewrite_url($valPost['canonical'], true, false);
-                                            $image = $valPost['image'];
-                                            // $description = $valPost['description'];
-                                            $description = cutnchar(strip_tags(base64_decode($valPost['description'])), 150);
-
-                                            $price = $valPost['price'];
-                                        ?>
-                                        <li>
-                                           <article class="uk-clearfix article-1">
-                                                <div class="thumb"><a href="#popup_image" data-uk-modal class="image img-cover dt_popup_image"
-                                                    data-caption="<?php echo $description ?>"
-                                                    data-url="<?php echo $valPost['landing_link'] ?>"
-                                                    ><img src="<?php echo $image ?>" alt="<?php echo $title ?>"></a></div>
-                                                <div class="info">
-                                                    <h3 class="title">
-                                                        <div class="uk-flex uk-flex-middle uk-flex-space-between">
-                                                            <a href="#" title="<?php echo $title ?>" class="line-2"><?php echo $title ?></a>
-                                                            <div class="price"><?php echo CURRENCY.$price ?></div>
+                <div class="panels">
+                    <div class="elementor-section elementor-top-section elementor-element elementor-element-d348f9b elementor-section-full_width elementor-section-height-min-height elementor-section-height-default elementor-section-items-middle">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-row">
+                                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-86e62ff">
+                                    <div class="elementor-column-wrap elementor-element-populated">
+                                        <div class="elementor-widget-wrap">
+                                            <div class="elementor-element elementor-element-be2431d elementor-widget elementor-widget-text-editor" >
+                                                <div class="elementor-widget-container">
+                                                    <div class="elementor-text-editor elementor-clearfix" >
+                                                        <div class="_df_book df-lite" id="df_41841" >
                                                         </div>
-                                                    </h3>
-                                                    <div class="description line-3"><?php echo $description ?></div>
+
+                                                    </div>
                                                 </div>
-                                            </article>
-                                        </li>
-                                        <?php } ?>
-                                    </ul>
-                                    <?php } ?>
-                                    <div class="panel-foot">
-                                        <div class="image img-cover">
-                                            <img src="<?php echo $valChild['image'] ?>" alt="">
-                                        </div>
-                                        <?php if (isset($valChild['landing_link']) && !empty($valChild['landing_link'])): ?>
-                                            <div class="uk-flex uk-flex-center">
-                                                <a target="_blank" href="<?php echo $valChild['landing_link'] ?>" class="dt_btn_viewmore">Viewmore</a>
                                             </div>
-                                        <?php endif ?>
+                                        </div>
                                     </div>
-                                </li>
-                                <?php } ?>
-                            </ul>
-                            </section>
+                                </div>
+                            </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
-        </section>
-    <?php } ?>
-</div>
+            <div id="my-id" class="uk-modal">
+                <div class="uk-modal-dialog">
+                    <a class="uk-modal-close uk-close"></a>
+                    <div class="aside-home">
+                        <form class="form ">
+                            CONNTACT US</h2>
+                            <p type="Name:"><input placeholder="Write your name here.."></input></p>
+                            <p type="Email:"><input placeholder="Let us know how to contact you back.."></input></p>
+                            <p type="Message:"><input placeholder="What would you like to tell us.."></input></p>
+                            <button>Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-banner">
+    </div>
+    <div class="panel-social">
+        <ul class="uk-list uk-clearfix">
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social1.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social2.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social3.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social4.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social5.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social6.png" alt=""></a></li>
+            <li><a class="image img-cover" href="" title=""><img src="resources/img/social7.png" alt=""></a></li>
+        </ul>
+    </div>
+</section>
+
+<script class="df-shortcode-script" type="application/javascript">
+    window.option_df_41841 = {
+        text: {
+            toggleSound: "Bật\/tắt tiếng",
+            toggleThumbnails: "Chuyển đổi hình",
+            toggleOutline: "Chuyển đổi Outline \ / Bookmark",
+            previousPage: "Trang trước",
+            nextPage: "Trang sau",
+            toggleFullscreen: "Chuyển đổi full màn hình",
+            zoomIn: "Phóng to",
+            zoomOut: "Thu nhỏ",
+            toggleHelp: "Chuyển đổi Trợ giúp",
+            singlePageMode: "Chế độ trang đơn",
+            doublePageMode: "Chế độ trang đôi",
+            downloadPDFFile: "Tải File PDF",
+            gotoFirstPage: "Đi tới đầu trang",
+            gotoLastPage: "Đi tới cuối trang",
+            share: "Chia sẻ",
+            mailSubject: "Tôi muốn bạn xem trang này",
+            mailBody: "Kiểm tra trang web này {{url}}",
+            loading: "Loading ",
+        },
+        moreControls: "download,pageMode,startPage,endPage,sound",
+        hideControls: "",
+        scrollWheel: "false",
+        backgroundColor: "#777",
+        backgroundImage: "",
+        height: "auto",
+        paddingLeft: "0",
+        paddingRight: "0",
+        controlsPosition: "bottom",
+        duration: 800,
+        soundEnable: "true",
+        enableDownload: "true",
+        enableAnnotation: "false",
+        enableAnalytics: "false",
+        webgl: "true",
+        hard: "none",
+        maxTextureSize: "1600",
+        rangeChunkSize: "524288",
+        stiffness: 3,
+        pageMode: "1",
+        pageSize: "0",
+        autoPlay: "false",
+        autoPlayDuration: 5000,
+        autoPlayStart: "false",
+        linkTarget: "2",
+        sharePrefix: "dearflip-",
+        forceFit: "true",
+        autoEnableOutline: "false",
+        autoEnableThumbnail: "false",
+        overwritePDFOutline: "false",
+        direction: "1",
+        zoomRatio: 1.5,
+        singlePageMode: "",
+        source: [
+            <?php for ( $i = 1; $i <= 27; $i++) {?>
+                "\/resources\/img\/book\/ProfileV1-<?php echo $i?>.jpg",
+            <?php } ?>
+        ],
+        wpOptions: "true",
+        links: [
+        <?php for ( $i  = 1; $i  <= 27; $i ++) {?>
+            [],
+        <?php } ?>
+        ],
+    };
+    if (window.DFLIP && window.DFLIP.parseBooks) {
+        window.DFLIP.parseBooks();
+    }
+    </script>
